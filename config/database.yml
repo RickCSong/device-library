@@ -1,0 +1,15 @@
+common: &common
+  adapter:  'mysql2'
+  host:     127.0.0.1
+  pool:     30
+  timeout:  5000
+  username: root
+  password:
+
+development:
+  <<: *common
+  database: device_library_development
+
+test:
+  <<: *common
+  database: device_library_test
