@@ -7,6 +7,7 @@ gem 'mysql2'
 gem 'active_model_serializers'
 
 # AUTH
+gem 'go_people', git: 'https://stash.corp.squareup.com/scm/it/go_people_rails.git'
 gem 'sq-sso', git: 'https://stash.corp.squareup.com/scm/it/sq-sso-rails.git'
 
 # VIEWS
