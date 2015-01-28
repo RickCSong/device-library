@@ -29,12 +29,12 @@ RSpec.describe User, type: :model do
   describe '#full_name' do
     subject { build(:user, first_name: 'Rick', last_name: 'Song').full_name }
 
-    it { is_expected.to eql('Rick Song')}
+    it { is_expected.to eql('Rick Song') }
   end
 
   describe '#email' do
     subject { build(:user, username: 'ricksong').email }
 
-    it { is_expected.to eql('ricksong@squareup.com')}
+    it { is_expected.to eql('ricksong@squareup.com') }
   end
 end

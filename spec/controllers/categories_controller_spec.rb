@@ -51,7 +51,7 @@ RSpec.describe CategoriesController, type: :controller do
       let(:category_params) do
         {
           name: 'Test category',
-          code: 'MX1'
+          code: 'MX1',
         }
       end
 
@@ -73,7 +73,7 @@ RSpec.describe CategoriesController, type: :controller do
       let(:category_params) do
         {
           name: '',
-          code: 'MX1'
+          code: 'MX1',
         }
       end
 
@@ -86,7 +86,6 @@ RSpec.describe CategoriesController, type: :controller do
       end
 
       it 'does not create a new category' do
-        category = Category.first
         expect(Category.count).to eql(0)
       end
 

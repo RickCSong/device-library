@@ -17,14 +17,13 @@
 
 FactoryGirl.define do
   factory :device do
-    hardware "MyString"
-operating_system "MyString"
-storage_code "MyString"
-barcode "MyString"
-status 1
-details "MyText"
-user nil
-category nil
+    hardware 'MyString'
+    operating_system 'MyString'
+    storage_code 'MyString'
+    barcode 'MyString'
+    status 1
+    details 'MyText'
+    user nil
+    category nil
   end
-
 end

@@ -1,0 +1,75 @@
+AllCops:
+  Exclude:
+    - bin/**/*
+    - lib/**/*
+    - vendor/**/*
+    - db/**/*
+
+Lint/EndAlignment:
+  AlignWith: keyword
+
+Style/AlignParameters:
+  EnforcedStyle: with_first_parameter
+
+Style/Blocks:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/CaseIndentation:
+  IndentOneStep: true
+
+Style/Encoding:
+  Enabled: false
+
+Style/DotPosition:
+  EnforcedStyle: leading
+
+Style/ModuleFunction:
+  Enabled: false
+
+# This cop attempts to replace has_a_property with property?
+# Unfortunately, this is not useful since serializers generate JSON which often
+# times want a has_a_property property.
+Style/PredicateName:
+  Exclude:
+    - app/serializers/**/*
+
+Style/TrailingComma:
+  EnforcedStyleForMultiline: comma
+
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+Metrics/PerceivedComplexity:
+  Max: 9
+
+# Revisit in future
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+  Exclude:
+    - spec/**/*
+
+# Raises exception if method length is too long
+Metrics/ClassLength:
+  Max: 140
+  Exclude:
+    - spec/**/*
+
+# Raises exception if method length is too long
+Metrics/MethodLength:
+  Max: 50
+  Exclude:
+    - spec/**/*
+
+

@@ -11,7 +11,7 @@
 
 FactoryGirl.define do
   factory :category do
-    sequence(:name) { |n| "category_#{n}"}
-    sequence(:code) { |n| "category_code_#{n}"}
+    sequence(:name) { |n| "category_#{n}" }
+    sequence(:code) { |n| "category_code_#{n}" }
   end
 end

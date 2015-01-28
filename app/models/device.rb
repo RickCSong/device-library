@@ -41,6 +41,4 @@ class Device < ActiveRecord::Base
             uniqueness: {case_sensitive: false}
 
   # TODO: Validate correctness of barcode.  category_code + storage_code
-
-
 end
