@@ -1,170 +1,118 @@
 require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
+  let(:valid_attributes) do
+    {
+      name: 'iPhone',
+      code: 'xIP'
+    }
+  end
+
+  let(:invalid_attributes) do
+    {
+      name: '',
+      code: ''
+    }
+  end
+
   describe 'GET index' do
-    let!(:categories) { create_list :category, 10 }
-
-    before do
-      xhr :get, :index, format: :json
-    end
-
-    it 'responds with success' do
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'responds with content-type: application/json' do
-      expect(response.content_type).to eql('application/json')
-    end
-
-    it 'responds with all categories serialized by CategorySerializer' do
-      expected = categories.map { |p| CategorySerializer.new(p).serializable_hash }.to_json
-      expect(response.body).to include(expected)
+    it 'assigns all categories as @categories' do
+      categories = create_list :category, 10
+      xhr :get, :index, {}
+      expect(assigns(:categories)).to eq(categories)
     end
   end
 
   describe 'GET show' do
-    let!(:category) { create :category }
-
-    before do
-      xhr :get, :show, id: category.id, format: :json
-    end
-
-    it 'responds with success' do
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'responds with content-type: application/json' do
-      expect(response.content_type).to eql('application/json')
-    end
-
-    it 'responds with the category serialized by CategorySerializer' do
-      expect(response.body).to eql(CategorySerializer.new(category).to_json)
+    it 'assigns the requested category as @category' do
+      category = create :category
+      xhr :get, :show, {id: category.to_param}
+      expect(assigns(:category)).to eq(category)
     end
   end
 
   describe 'POST create' do
-    before do
-      xhr :post, :create, category: category_params, format: :json
-    end
-
-    context 'valid params' do
-      let(:category_params) do
-        {
-          name: 'Test category',
-          code: 'MX1',
-        }
+    describe 'with valid params' do
+      it 'creates a new Category' do
+        expect {
+          xhr :post, :create, {category: valid_attributes}
+        }.to change(Category, :count).by(1)
+        expect(response).to have_http_status(:created)
       end
 
-      it 'responds with success' do
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'responds with content-type: application/json' do
-        expect(response.content_type).to eql('application/json')
-      end
-
-      it 'responds with the category serialized by CategorySerializer' do
-        category = Category.first
-        expect(response.body).to eql(CategorySerializer.new(category).to_json)
+      it 'assigns a newly created category as @category' do
+        xhr :post, :create, {category: valid_attributes}
+        expect(assigns(:category)).to be_a(Category)
+        expect(assigns(:category)).to be_persisted
       end
     end
 
-    context 'invalid params' do
-      let(:category_params) do
-        {
-          name: '',
-          code: 'MX1',
-        }
-      end
-
-      it 'responds with unprocessable entity' do
+    describe 'with invalid params' do
+      it 'does not create a new Category' do
+        expect {
+          xhr :post, :create, {category: invalid_attributes}
+        }.to_not change(Category, :count)
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'responds with content-type: application/json' do
-        expect(response.content_type).to eql('application/json')
-      end
-
-      it 'does not create a new category' do
-        expect(Category.count).to eql(0)
-      end
-
-      it 'expects error body to contain error' do
-        expect(response.body).to include('errors')
+      it 'assigns a newly created but unsaved category as @category' do
+        xhr :post, :create, {category: invalid_attributes}
+        expect(assigns(:category)).to be_a_new(Category)
       end
     end
   end
 
-  describe 'PATCH update' do
-    let!(:category) { create :category, name: 'Original name' }
-
-    before do
-      xhr :patch, :update, id: category.id, category: category_params, format: :json
-    end
-
-    context 'valid params' do
-      let(:category_params) do
-        {name: 'New name'}
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:new_attributes) do
+        {
+          name: 'Android'
+        }
       end
 
-      it 'responds with success' do
-        expect(response).to have_http_status(:success)
+      it 'updates the requested category' do
+        category = create :category
+        xhr :put, :update, {id: category.to_param, category: new_attributes}
+        category.reload
+        expect(category.name).to eql('Android')
       end
 
-      it 'responds with content-type: application/json' do
-        expect(response.content_type).to eql('application/json')
-      end
-
-      it 'responds with the updated category' do
-        expect(response.body).to eql(CategorySerializer.new(category.reload).to_json)
+      it 'returns no content' do
+        category = create :category
+        xhr :put, :update, {id: category.to_param, category: new_attributes}
+        expect(response).to have_http_status(:no_content)
+        expect(response.body).to be_blank
       end
     end
 
-    context 'invalid params' do
-      let(:category_params) do
-        {name: ''}
+    describe 'with invalid params' do
+      it 'assigns the category as @category' do
+        category = create :category
+        xhr :put, :update, {id: category.to_param, category: invalid_attributes}
+        expect(assigns(:category)).to eq(category)
       end
 
-      it 'responds with unprocessable entity' do
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
-      it 'responds with content-type: application/json' do
-        expect(response.content_type).to eql('application/json')
-      end
-
-      it 'has the old name' do
-        category = Category.first
-        expect(category.name).to eql('Original name')
-      end
-
-      it 'expects error body to contain error' do
-        expect(response.body).to include('errors')
+      it 'returns a hash of errors' do
+        category = create :category
+        xhr :put, :update, {id: category.to_param, category: invalid_attributes}
+        expect(response.body).to eql({errors: assigns(:category).errors}.to_json)
       end
     end
   end
 
   describe 'DELETE destroy' do
-    let!(:category) { create :category }
-
-    before do
-      xhr :delete, :destroy, id: category.id, format: :json
+    it 'destroys the requested category' do
+      category = create :category
+      expect {
+        xhr :delete, :destroy, {id: category.to_param}
+      }.to change(Category, :count).by(-1)
     end
 
-    it 'responds with success' do
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'responds with content-type: application/json' do
-      expect(response.content_type).to eql('application/json')
-    end
-
-    it 'responds with an empty string' do
-      expect(response.body).to eql(CategorySerializer.new(category).to_json)
-    end
-
-    it 'deletes the category' do
-      expect(Category.count).to eql(0)
+    it 'returns no content' do
+      category = create :category
+      xhr :delete, :destroy, {id: category.to_param}
+      expect(response).to have_http_status(:no_content)
+      expect(response.body).to be_blank
     end
   end
 end
