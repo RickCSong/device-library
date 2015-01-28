@@ -6,14 +6,14 @@ class DevicesController < ApplicationController
     @devices = Device.all
 
     respond_to do |format|
-      format.json { render json: @devices }
+      format.json
     end
   end
 
   # GET /devices/1.json
   def show
     respond_to do |format|
-      format.json { render json: @device }
+      format.json
     end
   end
 
@@ -24,7 +24,7 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       if @device.save
-        format.json { render json: @device, status: :created }
+        format.json { render 'show', status: :created }
       else
         format.json { render json: {errors: @device.errors}, status: :unprocessable_entity }
       end

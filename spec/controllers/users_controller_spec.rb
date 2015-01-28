@@ -7,13 +7,24 @@ RSpec.describe UsersController, type: :controller do
       xhr :get, :index, {}
       expect(assigns(:users)).to eq(users)
     end
+
+    it 'renders the index template' do
+      xhr :get, :index, {}
+      is_expected.to render_template('index')
+    end
   end
 
   describe 'GET show' do
+    let(:user) { create :user }
+
     it 'assigns the requested user as @user' do
-      user = create :user
-      xhr :get, :show, {id: user.to_param}
+      xhr :get, :show, id: user.to_param
       expect(assigns(:user)).to eq(user)
+    end
+
+    it 'renders the show template' do
+      xhr :get, :show, id: user.to_param
+      is_expected.to render_template('show')
     end
   end
 end

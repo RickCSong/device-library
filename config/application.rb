@@ -21,9 +21,7 @@ module DeviceLibrary
     # config.i18n.default_locale = :de
     config.generators do |g|
       g.helper false
-      g.view false
       g.test_framework :rspec,
-                       view_specs: false,
                        helper_specs: false
     end
   end

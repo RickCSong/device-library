@@ -6,14 +6,14 @@ class CategoriesController < ApplicationController
     @categories = Category.all
 
     respond_to do |format|
-      format.json { render json: @categories }
+      format.json
     end
   end
 
   # GET /categories/1.json
   def show
     respond_to do |format|
-      format.json { render json: @category }
+      format.json
     end
   end
 
@@ -24,7 +24,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        format.json { render json: @category, status: :created }
+        format.json { render 'show', status: :created }
       else
         format.json { render json: {errors: @category.errors}, status: :unprocessable_entity }
       end
