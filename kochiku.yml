@@ -1,0 +1,13 @@
+test_command: 'script/ci'
+language: ruby
+ruby:
+ - 2.2.0
+
+# This section, targets, has globs that are illustrative only.
+# script/ci actually just calls rake tasks based on the target type.
+targets:
+  - type: specs
+    glob: spec/**/*_spec.rb
+    workers: 4
+  - type: rubocop
+    workers: 1

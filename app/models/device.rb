@@ -16,7 +16,7 @@
 #
 
 class Device < ActiveRecord::Base
-  enum status: [:available, :maintenance, :checked_out]
+  enum status: [:available, :in_maintenance, :checked_out]
 
   belongs_to :user
   belongs_to :category

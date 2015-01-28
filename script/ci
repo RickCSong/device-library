@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -ex
+
+# Clone an existing Rails service, and make sure to give the CI bot access to
+# your project on git.corp.squareup.com so it can push up green tags.
+
+export RAILS_ENV="test"
+
+REQUIRED_BUNDLER_VERSION=">= 1.6.2"
+
+function install_bundler() {
+  gem install bundler --conservative --version "$REQUIRED_BUNDLER_VERSION"
+}
+
+function install_gems() {
+  bundle check || bundle install
+}
+
+function run_specs() {
+  case "$TEST_RUNNER" in
+    specs)
+      # TODO: TURN THESE OFF IN FUTURE
+      NOQUALITY=true
+      TASK="spec"
+      ;;
+
+    rubocop)
+      NOQUALITY=true
+      TASK="rubocop"
+      ;;
+
+    *)
+      echo "error: script/ci does not understand test runner '$TEST_RUNNER'!" >&2
+      exit 1
+      ;;
+  esac
+}
+
+function prepare_and_run() {
+  install_bundler &&
+  install_gems &&
+  run_specs
+}
+
+function before_tasks() {
+  echo "db:drop db:create db:structure:load"
+}
+
+function after_tasks() {
+  [ -n "$NOQUALITY" ] || ( which ruby | grep jruby 2>/dev/null ) ||
+    echo "quality"
+}
+
+prepare_and_run

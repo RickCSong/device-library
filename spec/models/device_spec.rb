@@ -24,7 +24,7 @@ RSpec.describe Device, type: :model do
     it { is_expected.to have_db_index(:barcode).unique(true) }
   end
 
-  it { is_expected.to define_enum_for(:status).with([:available, :maintenance, :checked_out]) }
+  it { is_expected.to define_enum_for(:status).with([:available, :in_maintenance, :checked_out]) }
   it { is_expected.to belong_to(:category) }
   it { is_expected.to belong_to(:user) }
 
