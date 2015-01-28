@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :devices
+
   root 'static#index'
 
   resources :users, only: [:index, :show]

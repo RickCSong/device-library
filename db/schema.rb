@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150127193121) do
+ActiveRecord::Schema.define(version: 20150128093025) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -22,6 +22,23 @@ ActiveRecord::Schema.define(version: 20150127193121) do
 
   add_index "categories", ["code"], name: "index_categories_on_code", unique: true, using: :btree
   add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
+
+  create_table "devices", force: :cascade do |t|
+    t.string   "hardware",         limit: 255
+    t.string   "operating_system", limit: 255
+    t.string   "storage_code",     limit: 255
+    t.string   "barcode",          limit: 255
+    t.integer  "status",           limit: 4,     default: 0
+    t.text     "details",          limit: 65535
+    t.integer  "user_id",          limit: 4
+    t.integer  "category_id",      limit: 4
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "devices", ["barcode"], name: "index_devices_on_barcode", unique: true, using: :btree
+  add_index "devices", ["category_id"], name: "index_devices_on_category_id", using: :btree
+  add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",   limit: 255
@@ -34,4 +51,6 @@ ActiveRecord::Schema.define(version: 20150127193121) do
 
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  add_foreign_key "devices", "categories"
+  add_foreign_key "devices", "users"
 end

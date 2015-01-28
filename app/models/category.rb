@@ -10,6 +10,8 @@
 #
 
 class Category < ActiveRecord::Base
+  has_many :devices
+
   validates :name,
             presence: true,
             uniqueness: {case_sensitive: false}

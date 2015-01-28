@@ -14,6 +14,8 @@
 class User < ActiveRecord::Base
   enum role: [:user, :admin, :terminal]
 
+  has_many :devices
+
   validates :username,
             presence: true,
             uniqueness: {case_sensitive: false}
