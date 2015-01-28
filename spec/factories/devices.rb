@@ -17,13 +17,13 @@
 
 FactoryGirl.define do
   factory :device do
-    hardware 'MyString'
-    operating_system 'MyString'
-    storage_code 'MyString'
-    barcode 'MyString'
-    status 1
-    details 'MyText'
+    hardware 'iPhone 6s'
+    operating_system 'iOS 7.1'
+    storage_code '0001'
+    sequence(:barcode) { |n| "category_code_1_000#{n}" }
+    status 'available'
+    details 'Random details regarding the device'
     user nil
-    category nil
+    category
   end
 end
