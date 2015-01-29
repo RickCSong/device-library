@@ -44,6 +44,10 @@ group :doc do
   gem 'yard', require: false
 end
 
+group :development do
+  gem 'web-console'
+end
+
 group :development, :test do
   gem 'annotate',           require: false
   gem 'factory_girl_rails'
