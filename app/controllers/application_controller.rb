@@ -7,11 +7,5 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :require_sso
-  before_filter :intercept_html_requests
-
-  private
-
-  def intercept_html_requests
-    render 'static/index' if request.format == Mime::HTML
-  end
+  before_filter :find_current_user
 end

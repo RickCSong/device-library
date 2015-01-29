@@ -1,13 +1,9 @@
 module Authentication
   extend ActiveSupport::Concern
 
-  included do
-    helper_method :current_user
-  end
-
   protected
 
-  def current_user
+  def find_current_user
     @current_user ||= User.find_or_create_by(
       username: current_username,
     )
