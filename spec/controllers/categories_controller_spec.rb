@@ -15,6 +15,12 @@ RSpec.describe CategoriesController, type: :controller do
     }
   end
 
+  let(:admin) { create :user, :admin }
+
+  before do
+    set_user_cookies(admin)
+  end
+
   describe 'GET index' do
     it 'assigns all categories as @categories' do
       categories = create_list :category, 10

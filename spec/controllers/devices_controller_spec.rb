@@ -25,6 +25,12 @@ RSpec.describe DevicesController, type: :controller do
     }
   end
 
+  let(:admin) { create :user, :admin }
+
+  before do
+    set_user_cookies(admin)
+  end
+
   describe 'GET index' do
     it 'assigns all devices as @devices' do
       devices = create_list :device, 10

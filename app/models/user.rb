@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
             presence: true,
             uniqueness: {case_sensitive: false}
 
+  validates :role,
+            presence: true
+
   def full_name
     "#{first_name} #{last_name}"
   end

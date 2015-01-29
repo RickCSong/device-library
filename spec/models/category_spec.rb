@@ -18,6 +18,10 @@ RSpec.describe Category, type: :model do
   end
 
   context '#validations' do
+    before do
+      create :category
+    end
+
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
 

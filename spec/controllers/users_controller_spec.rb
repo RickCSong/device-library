@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  let(:admin) { create :user, :admin }
+
+  before do
+    set_user_cookies(admin)
+  end
+
   describe 'GET index' do
     it 'assigns all users as @users' do
       users = create_list :user, 10

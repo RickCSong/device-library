@@ -17,5 +17,13 @@ FactoryGirl.define do
     first_name 'Rickilus'
     last_name 'Smith'
     role :user
+
+    trait :admin do
+      role :admin
+    end
+
+    trait :terminal do
+      role :terminal
+    end
   end
 end
