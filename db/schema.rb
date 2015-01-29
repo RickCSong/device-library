@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(version: 20150128093025) do
 
   create_table "categories", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "code",       limit: 255
+    t.string   "name",       limit: 255, null: false
+    t.string   "code",       limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -26,12 +26,12 @@ ActiveRecord::Schema.define(version: 20150128093025) do
   create_table "devices", force: :cascade do |t|
     t.string   "hardware",         limit: 255
     t.string   "operating_system", limit: 255
-    t.string   "storage_code",     limit: 255
-    t.string   "barcode",          limit: 255
-    t.integer  "status",           limit: 4,     default: 0
+    t.string   "storage_code",     limit: 255,               null: false
+    t.string   "barcode",          limit: 255,               null: false
+    t.integer  "status",           limit: 4,     default: 0, null: false
     t.text     "details",          limit: 65535
     t.integer  "user_id",          limit: 4
-    t.integer  "category_id",      limit: 4
+    t.integer  "category_id",      limit: 4,                 null: false
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
   end
@@ -41,12 +41,12 @@ ActiveRecord::Schema.define(version: 20150128093025) do
   add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",   limit: 255
+    t.string   "username",   limit: 255,             null: false
     t.string   "first_name", limit: 255
     t.string   "last_name",  limit: 255
-    t.integer  "role",       limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "role",       limit: 4,   default: 0, null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
