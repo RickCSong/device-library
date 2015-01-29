@@ -4,6 +4,10 @@ module Authentication
   protected
 
   def find_current_user
+    current_user
+  end
+
+  def current_user
     @current_user ||= User.find_or_create_by(
       username: current_username,
     )

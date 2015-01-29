@@ -16,24 +16,9 @@ gem 'jbuilder'
 # EMAILS
 gem 'roadie-rails'
 
-# CSS
-gem 'sass-rails', '~> 4.0.4'
-gem 'compass-rails'
-gem 'font-awesome-rails'
-gem 'autoprefixer-rails'
-gem 'bootstrap-square', git: 'https://stash.corp.squareup.com/scm/sq/bootstrap-square.git'
-
-# JAVASCRIPT CORE
+# CSS + JAVASCRIPT (Required for SSO Login)
+gem 'sass-rails'
 gem 'coffee-rails'
-gem 'uglifier'
-gem 'jquery-rails'
-gem 'ember-rails'
-gem 'ember-source', '~> 1.10.0.beta.4'
-gem 'ember-data-source', '~> 1.0.0.beta.14.1'
-
-# JAVASCRIPT LIBRARIES
-gem 'select2-rails'
-gem 'momentjs-rails'
 
 # OTHERS
 gem 'therubyracer', platform: :mri, require: 'v8'
