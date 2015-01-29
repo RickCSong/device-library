@@ -1,0 +1,11 @@
+<% case @current_user.role %>
+<% when 'admin' %>
+  <%= include_ember_script_tags :admin_frontend %>
+  <%= include_ember_stylesheet_tags :admin_frontend %>
+<% when 'terminal' %>
+  <%= include_ember_script_tags :terminal_frontend %>
+  <%= include_ember_stylesheet_tags :terminal_frontend %>
+<% else %>
+  <%= include_ember_script_tags :user_frontend %>
+  <%= include_ember_stylesheet_tags :user_frontend %>
+<% end %>

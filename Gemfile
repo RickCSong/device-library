@@ -19,6 +19,7 @@ gem 'roadie-rails'
 # CSS + JAVASCRIPT (Required for SSO Login)
 gem 'sass-rails'
 gem 'coffee-rails'
+gem 'ember-cli-rails'
 
 # OTHERS
 gem 'therubyracer', platform: :mri, require: 'v8'
