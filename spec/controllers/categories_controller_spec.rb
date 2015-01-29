@@ -18,10 +18,12 @@ RSpec.describe CategoriesController, type: :controller do
   let(:admin) { create :user, :admin }
 
   before do
-    set_user_cookies(admin)
+    fake_sso_login(admin)
   end
 
   describe 'GET index' do
+    include_context 'logged in as user'
+
     it 'assigns all categories as @categories' do
       categories = create_list :category, 10
       xhr :get, :index, {}
@@ -35,6 +37,8 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe 'GET show' do
+    include_context 'logged in as user'
+
     let(:category) { create :category }
 
     it 'assigns the requested category as @category' do
@@ -49,92 +53,131 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe 'POST create' do
-    describe 'with valid params' do
-      it 'creates a new Category' do
-        expect {
-          xhr :post, :create, category: valid_attributes
-        }.to change(Category, :count).by(1)
-        expect(response).to have_http_status(:created)
-      end
+    context 'as user' do
+      include_context 'logged in as user'
 
-      it 'assigns a newly created category as @category' do
-        xhr :post, :create, category: valid_attributes
-        expect(assigns(:category)).to be_a(Category)
-        expect(assigns(:category)).to be_persisted
+      it 'responds with forbidden error' do
+        xhr :post, :create, device: valid_attributes
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).to eql({errors: {role: 'must be an admin to perform this'}}.to_json)
       end
     end
 
-    describe 'with invalid params' do
-      it 'does not create a new Category' do
-        expect {
+    context 'as admin' do
+      include_context 'logged in as admin'
+      context 'with valid params' do
+        it 'creates a new Category' do
+          expect {
+            xhr :post, :create, category: valid_attributes
+          }.to change(Category, :count).by(1)
+          expect(response).to have_http_status(:created)
+        end
+
+        it 'assigns a newly created category as @category' do
+          xhr :post, :create, category: valid_attributes
+          expect(assigns(:category)).to be_a(Category)
+          expect(assigns(:category)).to be_persisted
+        end
+      end
+
+      context 'with invalid params' do
+        it 'does not create a new Category' do
+          expect {
+            xhr :post, :create, category: invalid_attributes
+          }.to_not change(Category, :count)
+        end
+
+        it 'assigns a newly created but unsaved category as @category' do
           xhr :post, :create, category: invalid_attributes
-        }.to_not change(Category, :count)
-      end
+          expect(assigns(:category)).to be_a_new(Category)
+        end
 
-      it 'assigns a newly created but unsaved category as @category' do
-        xhr :post, :create, category: invalid_attributes
-        expect(assigns(:category)).to be_a_new(Category)
-      end
-
-      it 'renders the show template' do
-        xhr :post, :create, category: valid_attributes
-        expect(response).to have_http_status(:created)
-        is_expected.to render_template('show')
+        it 'renders the show template' do
+          xhr :post, :create, category: valid_attributes
+          expect(response).to have_http_status(:created)
+          is_expected.to render_template('show')
+        end
       end
     end
   end
 
   describe 'PUT update' do
-    describe 'with valid params' do
-      let(:new_attributes) do
-        {
-          name: 'Android',
-        }
-      end
+    context 'as user' do
+      include_context 'logged in as user'
 
-      it 'updates the requested category' do
-        category = create :category
-        xhr :put, :update, id: category.to_param, category: new_attributes
-        category.reload
-        expect(category.name).to eql('Android')
-      end
-
-      it 'returns no content' do
-        category = create :category
-        xhr :put, :update, id: category.to_param, category: new_attributes
-        expect(response).to have_http_status(:no_content)
-        expect(response.body).to be_blank
+      it 'responds with forbidden error' do
+        xhr :post, :create, device: valid_attributes
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).to eql({errors: {role: 'must be an admin to perform this'}}.to_json)
       end
     end
 
-    describe 'with invalid params' do
-      it 'assigns the category as @category' do
-        category = create :category
-        xhr :put, :update, id: category.to_param, category: invalid_attributes
-        expect(assigns(:category)).to eq(category)
+    context 'as admin' do
+      include_context 'logged in as admin'
+      context 'with valid params' do
+        let(:new_attributes) do
+          {
+            name: 'Android',
+          }
+        end
+
+        it 'updates the requested category' do
+          category = create :category
+          xhr :put, :update, id: category.to_param, category: new_attributes
+          category.reload
+          expect(category.name).to eql('Android')
+        end
+
+        it 'returns no content' do
+          category = create :category
+          xhr :put, :update, id: category.to_param, category: new_attributes
+          expect(response).to have_http_status(:no_content)
+          expect(response.body).to be_blank
+        end
       end
 
-      it 'returns a hash of errors' do
-        category = create :category
-        xhr :put, :update, id: category.to_param, category: invalid_attributes
-        expect(response.body).to eql({errors: assigns(:category).errors}.to_json)
+      context 'with invalid params' do
+        it 'assigns the category as @category' do
+          category = create :category
+          xhr :put, :update, id: category.to_param, category: invalid_attributes
+          expect(assigns(:category)).to eq(category)
+        end
+
+        it 'returns a hash of errors' do
+          category = create :category
+          xhr :put, :update, id: category.to_param, category: invalid_attributes
+          expect(response.body).to eql({errors: assigns(:category).errors}.to_json)
+        end
       end
     end
   end
 
   describe 'DELETE destroy' do
-    it 'destroys the requested category' do
-      category = create :category
-      expect {
-        xhr :delete, :destroy, id: category.to_param
-      }.to change(Category, :count).by(-1)
+    context 'as user' do
+      include_context 'logged in as user'
+
+      it 'responds with forbidden error' do
+        xhr :post, :create, device: valid_attributes
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).to eql({errors: {role: 'must be an admin to perform this'}}.to_json)
+      end
     end
 
-    it 'returns no content' do
-      category = create :category
-      xhr :delete, :destroy, id: category.to_param
-      expect(response).to have_http_status(:no_content)
-      expect(response.body).to be_blank
+    context 'as admin' do
+      include_context 'logged in as admin'
+      it 'destroys the requested category' do
+        category = create :category
+        expect {
+          xhr :delete, :destroy, id: category.to_param
+        }.to change(Category, :count).by(-1)
+      end
+
+      it 'returns no content' do
+        category = create :category
+        xhr :delete, :destroy, id: category.to_param
+        expect(response).to have_http_status(:no_content)
+        expect(response.body).to be_blank
+      end
     end
   end
 end

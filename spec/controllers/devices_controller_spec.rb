@@ -25,13 +25,9 @@ RSpec.describe DevicesController, type: :controller do
     }
   end
 
-  let(:admin) { create :user, :admin }
-
-  before do
-    set_user_cookies(admin)
-  end
-
   describe 'GET index' do
+    include_context 'logged in as user'
+
     it 'assigns all devices as @devices' do
       devices = create_list :device, 10
       xhr :get, :index, {}
@@ -45,6 +41,8 @@ RSpec.describe DevicesController, type: :controller do
   end
 
   describe 'GET show' do
+    include_context 'logged in as user'
+
     let(:device) { create :device }
 
     it 'assigns the requested device as @device' do
@@ -59,92 +57,134 @@ RSpec.describe DevicesController, type: :controller do
   end
 
   describe 'POST create' do
-    describe 'with valid params' do
-      it 'creates a new Device' do
-        expect {
-          xhr :post, :create, device: valid_attributes
-        }.to change(Device, :count).by(1)
-      end
+    context 'as user' do
+      include_context 'logged in as user'
 
-      it 'assigns a newly created device as @device' do
+      it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
-        expect(assigns(:device)).to be_a(Device)
-        expect(assigns(:device)).to be_persisted
-      end
-
-      it 'renders the show template' do
-        xhr :post, :create, device: valid_attributes
-        expect(response).to have_http_status(:created)
-        is_expected.to render_template('show')
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).to eql({errors: {role: 'must be an admin to perform this'}}.to_json)
       end
     end
 
-    describe 'with invalid params' do
-      it 'does not create a new Device' do
-        expect {
-          xhr :post, :create, device: invalid_attributes
-        }.to_not change(Device, :count)
-        expect(response).to have_http_status(:unprocessable_entity)
+    context 'as admin' do
+      include_context 'logged in as admin'
+
+      context 'with valid params' do
+        it 'creates a new Device' do
+          expect {
+            xhr :post, :create, device: valid_attributes
+          }.to change(Device, :count).by(1)
+        end
+
+        it 'assigns a newly created device as @device' do
+          xhr :post, :create, device: valid_attributes
+          expect(assigns(:device)).to be_a(Device)
+          expect(assigns(:device)).to be_persisted
+        end
+
+        it 'renders the show template' do
+          xhr :post, :create, device: valid_attributes
+          expect(response).to have_http_status(:created)
+          is_expected.to render_template('show')
+        end
       end
 
-      it 'assigns a newly created but unsaved device as @device' do
-        xhr :post, :create, device: invalid_attributes
-        expect(assigns(:device)).to be_a_new(Device)
+      context 'with invalid params' do
+        it 'does not create a new Device' do
+          expect {
+            xhr :post, :create, device: invalid_attributes
+          }.to_not change(Device, :count)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'assigns a newly created but unsaved device as @device' do
+          xhr :post, :create, device: invalid_attributes
+          expect(assigns(:device)).to be_a_new(Device)
+        end
       end
     end
   end
 
   describe 'PUT update' do
-    describe 'with valid params' do
-      let(:new_attributes) do
-        {
-          hardware: 'iPhone 5s',
-        }
-      end
+    context 'as user' do
+      include_context 'logged in as user'
 
-      it 'updates the requested device' do
-        device = create :device
-        xhr :put, :update, id: device.to_param, device: new_attributes
-        device.reload
-        expect(device.hardware).to eql('iPhone 5s')
-      end
-
-      it 'returns no content' do
-        device = create :device
-        xhr :put, :update, id: device.to_param, device: new_attributes
-        expect(response).to have_http_status(:no_content)
-        expect(response.body).to be_blank
+      it 'responds with forbidden error' do
+        xhr :post, :create, device: valid_attributes
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).to eql({errors: {role: 'must be an admin to perform this'}}.to_json)
       end
     end
 
-    describe 'with invalid params' do
-      it 'assigns the device as @device' do
-        device = create :device
-        xhr :put, :update, id: device.to_param, device: invalid_attributes
-        expect(assigns(:device)).to eq(device)
+    context 'as admin' do
+      include_context 'logged in as admin'
+
+      context 'with valid params' do
+        let(:new_attributes) do
+          {
+            hardware: 'iPhone 5s',
+          }
+        end
+
+        it 'updates the requested device' do
+          device = create :device
+          xhr :put, :update, id: device.to_param, device: new_attributes
+          device.reload
+          expect(device.hardware).to eql('iPhone 5s')
+        end
+
+        it 'returns no content' do
+          device = create :device
+          xhr :put, :update, id: device.to_param, device: new_attributes
+          expect(response).to have_http_status(:no_content)
+          expect(response.body).to be_blank
+        end
       end
 
-      it 'returns a hash of errors' do
-        device = create :device
-        xhr :put, :update, id: device.to_param, device: invalid_attributes
-        expect(response.body).to eql({errors: assigns(:device).errors}.to_json)
+      context 'with invalid params' do
+        it 'assigns the device as @device' do
+          device = create :device
+          xhr :put, :update, id: device.to_param, device: invalid_attributes
+          expect(assigns(:device)).to eq(device)
+        end
+
+        it 'returns a hash of errors' do
+          device = create :device
+          xhr :put, :update, id: device.to_param, device: invalid_attributes
+          expect(response.body).to eql({errors: assigns(:device).errors}.to_json)
+        end
       end
     end
   end
 
   describe 'DELETE destroy' do
-    it 'destroys the requested device' do
-      device = create :device
-      expect {
-        xhr :delete, :destroy, id: device.to_param
-      }.to change(Device, :count).by(-1)
+    context 'as user' do
+      include_context 'logged in as user'
+
+      it 'responds with forbidden error' do
+        xhr :post, :create, device: valid_attributes
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).to eql({errors: {role: 'must be an admin to perform this'}}.to_json)
+      end
     end
 
-    it 'returns no content' do
-      device = create :device
-      xhr :delete, :destroy, id: device.to_param
-      expect(response).to have_http_status(:no_content)
-      expect(response.body).to be_blank
+    context 'as admin' do
+      include_context 'logged in as admin'
+
+      it 'destroys the requested device' do
+        device = create :device
+        expect {
+          xhr :delete, :destroy, id: device.to_param
+        }.to change(Device, :count).by(-1)
+      end
+
+      it 'returns no content' do
+        device = create :device
+        xhr :delete, :destroy, id: device.to_param
+        expect(response).to have_http_status(:no_content)
+        expect(response.body).to be_blank
+      end
     end
   end
 end
