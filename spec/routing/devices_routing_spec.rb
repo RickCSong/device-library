@@ -21,5 +21,13 @@ RSpec.describe DevicesController, type: :routing do
     it 'routes to #destroy' do
       expect(delete: '/devices/1.json').to route_to('devices#destroy', id: '1', format: 'json')
     end
+
+    it 'routes to #checkout' do
+      expect(post: '/devices/checkout.json').to route_to('devices#checkout', format: 'json')
+    end
+
+    it 'routes to #return' do
+      expect(post: '/devices/return.json').to route_to('devices#checkout', format: 'json')
+    end
   end
 end

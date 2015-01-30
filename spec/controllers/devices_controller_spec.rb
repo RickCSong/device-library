@@ -187,4 +187,36 @@ RSpec.describe DevicesController, type: :controller do
       end
     end
   end
+
+  describe 'POST checkout' do
+    context 'as user' do
+      include_context 'logged in with user permissions'
+
+      it 'responds with forbidden error' do
+        xhr :post, :checkout
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).to eql({errors: {role: 'must be a terminal to perform this'}}.to_json)
+      end
+    end
+
+    context 'as terminal' do
+      include_context 'logged in with terminal permissions'
+    end
+  end
+
+  describe 'POST return' do
+    context 'as user' do
+      include_context 'logged in with user permissions'
+
+      it 'responds with forbidden error' do
+        xhr :post, :return
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).to eql({errors: {role: 'must be a terminal to perform this'}}.to_json)
+      end
+    end
+
+    context 'as terminal' do
+      include_context 'logged in with terminal permissions'
+    end
+  end
 end

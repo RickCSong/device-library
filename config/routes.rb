@@ -16,7 +16,12 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show], constraints: FormatTest.new(:json)
   resources :categories, only: [:index, :show, :create, :update, :destroy], constraints: FormatTest.new(:json)
-  resources :devices, only: [:index, :show, :create, :update, :destroy], constraints: FormatTest.new(:json)
+  resources :devices, only: [:index, :show, :create, :update, :destroy], constraints: FormatTest.new(:json) do
+    collection do
+      post 'checkout'
+      post 'return'
+    end
+  end
 
   # This needs to be at the bottom.
   get '/*path' => 'static#index', constraints: FormatTest.new(:html)

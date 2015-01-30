@@ -1,6 +1,7 @@
 class DevicesController < ApplicationController
   before_action :set_device, only: [:show, :update, :destroy]
   before_action :require_admin_permission, only: [:create, :update, :destroy]
+  before_action :require_terminal_permission, only: [:checkout, :return]
 
   # GET /devices.json
   def index
@@ -53,6 +54,16 @@ class DevicesController < ApplicationController
     end
   end
 
+  # POST /devices/checkout
+  def checkout
+
+  end
+
+  # POST /devices/return
+  def return
+
+  end
+
   private
 
   def set_device
@@ -68,5 +79,13 @@ class DevicesController < ApplicationController
                                    :details,
                                    :user_id,
                                    :category_id)
+  end
+
+  def checkout_params
+
+  end
+
+  def return_params
+
   end
 end
