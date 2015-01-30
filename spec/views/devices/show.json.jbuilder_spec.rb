@@ -26,11 +26,11 @@ RSpec.describe 'devices/show', type: :view do
     it { is_expected.to include('hardware') }
     it { expect(subject['hardware']).to eql(device.hardware) }
 
-    it { is_expected.to include('operating_system') }
-    it { expect(subject['operating_system']).to eql(device.operating_system) }
+    it { is_expected.to include('operatingSystem') }
+    it { expect(subject['operatingSystem']).to eql(device.operating_system) }
 
-    it { is_expected.to include('storage_code') }
-    it { expect(subject['storage_code']).to eql(device.storage_code) }
+    it { is_expected.to include('storageCode') }
+    it { expect(subject['storageCode']).to eql(device.storage_code) }
 
     it { is_expected.to include('barcode') }
     it { expect(subject['barcode']).to eql(device.barcode) }

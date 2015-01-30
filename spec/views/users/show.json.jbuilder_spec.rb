@@ -26,11 +26,11 @@ RSpec.describe 'users/show', type: :view do
     it { is_expected.to include('username') }
     it { expect(subject['username']).to eql(user.username) }
 
-    it { is_expected.to include('first_name') }
-    it { expect(subject['first_name']).to eql(user.first_name) }
+    it { is_expected.to include('firstName') }
+    it { expect(subject['firstName']).to eql(user.first_name) }
 
-    it { is_expected.to include('last_name') }
-    it { expect(subject['last_name']).to eql(user.last_name) }
+    it { is_expected.to include('lastName') }
+    it { expect(subject['lastName']).to eql(user.last_name) }
 
     it { is_expected.to include('devices') }
     it { expect(subject['devices']).to eql(user.device_ids) }

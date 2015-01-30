@@ -4,7 +4,7 @@ class DevicesController < ApplicationController
 
   # GET /devices.json
   def index
-    @devices = Device.all
+    @devices = params[:ids] ? Device.where(id: params[:ids]) : Device.all
 
     respond_to do |format|
       format.json
