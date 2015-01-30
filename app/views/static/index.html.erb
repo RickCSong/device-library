@@ -1,4 +1,4 @@
-<% case @current_user.role %>
+<% case @user.role %>
 <% when 'admin' %>
   <%= include_ember_script_tags :admin_frontend %>
   <%= include_ember_stylesheet_tags :admin_frontend %>

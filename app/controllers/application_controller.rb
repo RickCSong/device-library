@@ -7,5 +7,4 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :require_sso
-  before_filter :find_current_user
 end

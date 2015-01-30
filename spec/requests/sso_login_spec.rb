@@ -10,7 +10,7 @@ RSpec.describe 'SSO Login', type: :request do
     end
 
     context 'logged in' do
-      include_context 'logged in as user'
+      include_context 'logged in with user permissions'
 
       it 'does not redirect the user' do
         get '/'

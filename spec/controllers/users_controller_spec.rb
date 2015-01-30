@@ -1,14 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  let(:admin) { create :user, :admin }
-
-  before do
-    fake_sso_login(admin)
-  end
-
   describe 'GET index' do
-    include_context 'logged in as user'
+    include_context 'logged in with user permissions'
 
     let!(:users) { create_list :user, 10 }
 
@@ -24,13 +18,20 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'GET show' do
-    include_context 'logged in as user'
+    include_context 'logged in with user permissions'
 
     let!(:user) { create :user }
 
     it 'assigns the requested user as @user' do
       xhr :get, :show, id: user.to_param
       expect(assigns(:user)).to eq(user)
+    end
+
+    context 'id = current' do
+      it 'assigns the current user as @user' do
+        xhr :get, :show, id: 'current'
+        expect(assigns(:user)).to eq(current_user)
+      end
     end
 
     it 'renders the show template' do

@@ -1,26 +1,26 @@
-RSpec.shared_context 'logged in as user' do
+RSpec.shared_context 'logged in with user permissions' do
   include SSOMacros
-  let(:user) { create :user }
+  let(:current_user) { create :user }
 
   before do
-    fake_sso_login(user)
+    fake_sso_login(current_user)
   end
 end
 
-RSpec.shared_context 'logged in as admin' do
+RSpec.shared_context 'logged in with admin permissions' do
   include SSOMacros
-  let(:user) { create :user, :admin }
+  let(:current_user) { create :user, :admin }
 
   before do
-    fake_sso_login(user)
+    fake_sso_login(current_user)
   end
 end
 
-RSpec.shared_context 'logged in as terminal' do
+RSpec.shared_context 'logged in with terminal permissions' do
   include SSOMacros
-  let(:user) { create :user, :terminal }
+  let(:current_user) { create :user, :terminal }
 
   before do
-    fake_sso_login(user)
+    fake_sso_login(current_user)
   end
 end

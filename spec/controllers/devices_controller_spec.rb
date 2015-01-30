@@ -26,7 +26,7 @@ RSpec.describe DevicesController, type: :controller do
   end
 
   describe 'GET index' do
-    include_context 'logged in as user'
+    include_context 'logged in with user permissions'
 
     it 'assigns all devices as @devices' do
       devices = create_list :device, 10
@@ -41,7 +41,7 @@ RSpec.describe DevicesController, type: :controller do
   end
 
   describe 'GET show' do
-    include_context 'logged in as user'
+    include_context 'logged in with user permissions'
 
     let(:device) { create :device }
 
@@ -58,7 +58,7 @@ RSpec.describe DevicesController, type: :controller do
 
   describe 'POST create' do
     context 'as user' do
-      include_context 'logged in as user'
+      include_context 'logged in with user permissions'
 
       it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
@@ -68,7 +68,7 @@ RSpec.describe DevicesController, type: :controller do
     end
 
     context 'as admin' do
-      include_context 'logged in as admin'
+      include_context 'logged in with admin permissions'
 
       context 'with valid params' do
         it 'creates a new Device' do
@@ -108,7 +108,7 @@ RSpec.describe DevicesController, type: :controller do
 
   describe 'PUT update' do
     context 'as user' do
-      include_context 'logged in as user'
+      include_context 'logged in with user permissions'
 
       it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
@@ -118,7 +118,7 @@ RSpec.describe DevicesController, type: :controller do
     end
 
     context 'as admin' do
-      include_context 'logged in as admin'
+      include_context 'logged in with admin permissions'
 
       context 'with valid params' do
         let(:new_attributes) do
@@ -160,7 +160,7 @@ RSpec.describe DevicesController, type: :controller do
 
   describe 'DELETE destroy' do
     context 'as user' do
-      include_context 'logged in as user'
+      include_context 'logged in with user permissions'
 
       it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
@@ -170,7 +170,7 @@ RSpec.describe DevicesController, type: :controller do
     end
 
     context 'as admin' do
-      include_context 'logged in as admin'
+      include_context 'logged in with admin permissions'
 
       it 'destroys the requested device' do
         device = create :device
