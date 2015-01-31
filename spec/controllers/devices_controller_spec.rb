@@ -42,8 +42,7 @@ RSpec.describe DevicesController, type: :controller do
 
   describe 'GET show' do
     include_context 'logged in with user permissions'
-
-    let(:device) { create :device }
+    let!(:device) { create :device }
 
     it 'assigns the requested device as @device' do
       xhr :get, :show, id: device.to_param
@@ -113,12 +112,13 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: 'must be an admin to perform this'}}.to_json)
+        expect(response.body).to eql({errors: {role: ['must be an admin to perform this']}}.to_json)
       end
     end
 
     context 'as admin' do
       include_context 'logged in with admin permissions'
+      let!(:device) { create :device }
 
       context 'with valid params' do
         let(:new_attributes) do
@@ -128,14 +128,12 @@ RSpec.describe DevicesController, type: :controller do
         end
 
         it 'updates the requested device' do
-          device = create :device
           xhr :put, :update, id: device.to_param, device: new_attributes
           device.reload
           expect(device.hardware).to eql('iPhone 5s')
         end
 
         it 'returns no content' do
-          device = create :device
           xhr :put, :update, id: device.to_param, device: new_attributes
           expect(response).to have_http_status(:no_content)
           expect(response.body).to be_blank
@@ -144,13 +142,11 @@ RSpec.describe DevicesController, type: :controller do
 
       context 'with invalid params' do
         it 'assigns the device as @device' do
-          device = create :device
           xhr :put, :update, id: device.to_param, device: invalid_attributes
           expect(assigns(:device)).to eq(device)
         end
 
         it 'returns a hash of errors' do
-          device = create :device
           xhr :put, :update, id: device.to_param, device: invalid_attributes
           expect(response.body).to eql({errors: assigns(:device).errors}.to_json)
         end
@@ -165,22 +161,21 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: 'must be an admin to perform this'}}.to_json)
+        expect(response.body).to eql({errors: {role: ['must be an admin to perform this']}}.to_json)
       end
     end
 
     context 'as admin' do
       include_context 'logged in with admin permissions'
+      let!(:device) { create :device }
 
       it 'destroys the requested device' do
-        device = create :device
         expect {
           xhr :delete, :destroy, id: device.to_param
         }.to change(Device, :count).by(-1)
       end
 
       it 'returns no content' do
-        device = create :device
         xhr :delete, :destroy, id: device.to_param
         expect(response).to have_http_status(:no_content)
         expect(response.body).to be_blank
@@ -195,12 +190,57 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :checkout
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: 'must be a terminal to perform this'}}.to_json)
+        expect(response.body).to eql({errors: {role: ['must be a terminal to perform this']}}.to_json)
       end
     end
 
     context 'as terminal' do
       include_context 'logged in with terminal permissions'
+
+      context 'available device' do
+        let!(:device) { create :device, :available }
+        let!(:user) { create :user }
+
+        it 'updates the status of the device to available' do
+          expect {
+            xhr :post, :checkout, barcode: device.barcode, user_id: user.id
+          }.to change { device.reload.status }.from('available').to('checked_out')
+        end
+
+        it 'updates the owner of the device to nil' do
+          expect {
+            xhr :post, :checkout, barcode: device.barcode, user_id: user.id
+          }.to change { device.reload.user_id }.from(nil).to(user.id)
+        end
+
+        it 'returns no content' do
+          xhr :post, :checkout, barcode: device.barcode, user_id: user.id
+          expect(response).to have_http_status(:no_content)
+        end
+      end
+
+      context 'checked_out device' do
+        let!(:device) { create :device, :checked_out }
+        let!(:user) { create :user }
+
+        it 'does not change the status of the device' do
+          expect {
+            xhr :post, :checkout, barcode: device.barcode, user_id: user.id
+          }.to_not change { device.reload.status }
+        end
+
+        it 'does not change the owner of the device' do
+          expect {
+            xhr :post, :checkout, barcode: device.barcode, user_id: user.id
+          }.to_not change { device.reload.user_id }
+        end
+
+        it 'returns with device errors' do
+          xhr :post, :checkout, barcode: device.barcode, user_id: user.id
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.body).to eql({errors: {status: ['is not available']}}.to_json)
+        end
+      end
     end
   end
 
@@ -211,12 +251,55 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :return
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: 'must be a terminal to perform this'}}.to_json)
+        expect(response.body).to eql({errors: {role: ['must be a terminal to perform this']}}.to_json)
       end
     end
 
     context 'as terminal' do
       include_context 'logged in with terminal permissions'
+
+      context 'checked out device' do
+        let!(:device) { create :device, :checked_out }
+
+        it 'updates the status of the device to available' do
+          expect {
+            xhr :post, :return, barcode: device.barcode
+          }.to change { device.reload.status }.from('checked_out').to('available')
+        end
+
+        it 'updates the owner of the device to nil' do
+          expect {
+            xhr :post, :return, barcode: device.barcode
+          }.to change { device.reload.user_id }.from(device.user_id).to(nil)
+        end
+
+        it 'returns no content' do
+          xhr :post, :return, barcode: device.barcode
+          expect(response).to have_http_status(:no_content)
+        end
+      end
+
+      context 'available device' do
+        let!(:device) { create :device, :available }
+
+        it 'does not change status of the device' do
+          expect {
+            xhr :post, :return, barcode: device.barcode
+          }.to_not change { device.reload.status }
+        end
+
+        it 'does not change the owner of the device' do
+          expect {
+            xhr :post, :return, barcode: device.barcode
+          }.to_not change { device.reload.user_id }
+        end
+
+        it 'returns with device errors' do
+          xhr :post, :return, barcode: device.barcode
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.body).to eql({errors: {status: ['is not checked out']}}.to_json)
+        end
+      end
     end
   end
 end

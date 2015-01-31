@@ -27,7 +27,7 @@ RSpec.describe DevicesController, type: :routing do
     end
 
     it 'routes to #return' do
-      expect(post: '/devices/return.json').to route_to('devices#checkout', format: 'json')
+      expect(post: '/devices/return.json').to route_to('devices#return', format: 'json')
     end
   end
 end

@@ -1,7 +1,10 @@
 class DevicesController < ApplicationController
-  before_action :set_device, only: [:show, :update, :destroy]
   before_action :require_admin_permission, only: [:create, :update, :destroy]
+  before_action :set_device, only: [:show, :update, :destroy]
+
   before_action :require_terminal_permission, only: [:checkout, :return]
+  before_action :set_device_by_barcode, only: [:checkout, :return]
+
 
   # GET /devices.json
   def index
@@ -56,18 +59,36 @@ class DevicesController < ApplicationController
 
   # POST /devices/checkout
   def checkout
-
+    @device_checkout = DeviceCheckoutMediator.new(device: @device, user_id: params[:user_id])
+    respond_to do |format|
+      if @device_checkout.save
+        format.json { head :no_content }
+      else
+        format.json { render json: {errors: @device_checkout.errors}, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /devices/return
   def return
-
+    @device_return = DeviceReturnMediator.new(device: @device)
+    respond_to do |format|
+      if @device_return.save
+        format.json { head :no_content }
+      else
+        format.json { render json: {errors: @device_return.errors}, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
 
   def set_device
     @device = Device.find(params[:id])
+  end
+
+  def set_device_by_barcode
+    @device = Device.find_by(barcode: params[:barcode])
   end
 
   def device_params
@@ -79,13 +100,5 @@ class DevicesController < ApplicationController
                                    :details,
                                    :user_id,
                                    :category_id)
-  end
-
-  def checkout_params
-
-  end
-
-  def return_params
-
   end
 end

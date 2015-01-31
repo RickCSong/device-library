@@ -25,5 +25,14 @@ FactoryGirl.define do
     details 'Random details regarding the device'
     user nil
     category
+
+    trait :available do
+      status 'available'
+    end
+
+    trait :checked_out do
+      status 'checked_out'
+      user
+    end
   end
 end

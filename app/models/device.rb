@@ -40,5 +40,12 @@ class Device < ActiveRecord::Base
             presence: true,
             uniqueness: {case_sensitive: false}
 
+  validate :is_checked_out_by_user
   # TODO: Validate correctness of barcode.  category_code + storage_code
+
+  private
+
+  def is_checked_out_by_user
+    errors.add(:status, 'has to be checked out by a user') if checked_out? and user_id.blank?
+  end
 end

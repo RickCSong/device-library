@@ -29,9 +29,7 @@ RSpec.describe Device, type: :model do
   it { is_expected.to belong_to(:user) }
 
   context '#validations' do
-    before do
-      create :device
-    end
+    let!(:device) { create :device }
 
     it { is_expected.to validate_presence_of(:category) }
     it { is_expected.to validate_presence_of(:hardware) }
@@ -40,5 +38,13 @@ RSpec.describe Device, type: :model do
     it { is_expected.to validate_presence_of(:status) }
     it { is_expected.to validate_presence_of(:barcode) }
     it { is_expected.to validate_uniqueness_of(:barcode).case_insensitive }
+
+    context 'validate is_checked_out_by_user' do
+      let(:invalid_device) { build(:device, status: 'checked_out', user_id: nil) }
+      before { invalid_device.valid? }
+
+      it { expect(invalid_device.valid?).to be_falsey }
+      it { expect(invalid_device.errors[:status]).to include('has to be checked out by a user') }
+    end
   end
 end
