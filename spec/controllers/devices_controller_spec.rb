@@ -63,7 +63,7 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: 'must be an admin to perform this'}}.to_json)
+        expect(response.body).to eql({errors: {role: ['must be an admin to perform this']}}.to_json)
       end
     end
 
