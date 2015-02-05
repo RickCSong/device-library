@@ -1,0 +1,24 @@
+<div class="flex-wrapper-center">
+  <div class="flex-item">
+    <div class="user-select">
+      {{select-2
+        content=users
+        value=userId
+        optionLabelPath='fullName'
+        optionValuePath='id'
+        placeholder="Who are you?"
+        sorted=true
+      }}
+    </div>
+
+    {{#if userId}}
+      <div class="scan-devices">
+        {{checkout-input class="form-control" action='checkout'}}
+        <div class="text-center">
+          <i class="fa fa-shopping-cart"></i>
+          <h3> Scan a device to check it out </h3>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>

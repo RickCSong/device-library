@@ -1,0 +1,68 @@
+$select2-height: 46px;
+$select2-padding-left: 14px;
+$select2-padding-top-result: 8px;
+$select2-padding-bottom-result: 8px;
+
+$select2-font-size: 24px;
+$select2-font-size-dropdown: 16px;
+$select2-line-height: 24px;
+
+$select2-border-size: 1px;
+$select2-border-radius: 2px;
+
+@import 'vendor/bootstrap-square/css/bootstrap-square';
+@import 'bower_components/fontawesome/scss/font-awesome';
+
+@import './components/checkout-input';
+
+body {
+  background-color: $color-ultra-light;
+}
+
+.main {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: $navbar-primary-height;
+}
+
+.flex-wrapper-center {
+  display: flex;
+  height: 100%;
+
+  justify-content: center;
+
+  .flex-item {
+    padding-top: 200px;
+    height: 100%;
+    width: 600px;
+    max-width: 50%;
+  }
+}
+
+// Checkout / Return
+.scan-devices {
+  .fa {
+    font-size: 10em;
+  }
+}
+
+.user-select ~ .scan-devices {
+  margin-top: 50px;
+}
+
+// Search
+.form-search {
+  input[type="search"] {
+    height: 46px;
+    font-size: 24px;
+    padding-left: 50px;
+  }
+
+  i {
+    top: 16px;
+    left: 20px;
+  }
+}

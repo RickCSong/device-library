@@ -1,0 +1,46 @@
+<div class="row holdings">
+  <div class="col-md-9 devices">
+    <div class="panel panel-bevelled">
+      <div class="panel-heading">
+        <h5> You currently have <span class="text-success">{{content.length}}</span> devices checked out </h5>
+      </div>
+      <div class="panel-body">
+        <table class="table table-default">
+          <thead>
+            <tr>
+              <th>Storage Code</th>
+              <th>Device</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {{#each device in content}}
+            <tr>
+              <td>#{{device.storageCode}}</td>
+              <td>{{device.fullName}}</td>
+              <td> 3 Days Overdue </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 activity">
+    <div class="panel panel-bevelled">
+      <div class="panel-heading">
+        <h5> Recent Activity </h5>
+      </div>
+      <div class="panel-body">
+        <ul class="list-unstyled">
+          {{#each device in content}}
+          <li> Checked out {{device.fullName}} </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,18 @@
+@import 'vendor/bootstrap-square/css/bootstrap-square';
+@import 'bower_components/fontawesome/scss/font-awesome';
+
+@import 'pages/holdings';
+@import 'pages/catalog';
+
+body {
+  background-color: $color-ultra-light;
+}
+
+.main {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: $navbar-primary-height + 40px;
+}

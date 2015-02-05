@@ -1,0 +1,22 @@
+$panel-bevel-border-color: $color-light;
+$panel-bevel-heading-border-color: $color-ultra-light-dark;
+
+.panel {
+  &.panel-bevelled {
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid $panel-bevel-border-color;
+
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0;
+      display: inline-block;
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $panel-bevel-heading-border-color;
+      padding: 20px 15px;
+    }
+  }
+}

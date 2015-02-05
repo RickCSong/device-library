@@ -1,0 +1,29 @@
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      {{#link-to 'checkout' class='navbar-brand'}}
+        <i class="sq-icon-brand"></i>
+      {{/link-to}}
+    </div>
+
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        {{#li-link-to href='checkout'}}Checkout{{/li-link-to}}
+        {{#li-link-to href='return'}}Return{{/li-link-to}}
+        {{!-- {{#li-link-to href='search'}}Search{{/li-link-to}} --}}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{{base-flash queuedMessages=queuedMessages}}
+<div class="container main">
+  {{outlet}}
+</div>

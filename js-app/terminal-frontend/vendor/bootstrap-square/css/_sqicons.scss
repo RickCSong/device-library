@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'sq-icons';
+  src:url('fonts/sqicons.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+i {
+  font-family: 'sq-icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sq-icon-brand:before {
+  content: "\e600";
+}

@@ -1,0 +1,32 @@
+.alert {
+  margin: 0;
+  padding: $alert-padding-top-bottom $alert-padding-left-right;
+
+  border: none;
+  border-radius: 0;
+  color: $color-white;
+
+  i {
+    margin-right: 10px;
+  }
+  .close {
+    right: 0;
+    color: white;
+    opacity: 0.5;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &.alert-success {
+    background-color: $alert-background-color-success;
+  }
+
+  &.alert-info {
+    background-color: $alert-background-color-info;
+  }
+
+  &.alert-danger {
+    background-color: $alert-background-color-danger;
+  }
+}
