@@ -7,7 +7,7 @@ RSpec.describe DeviceReturnMediator, type: :mediator do
       device = build(:device, :available)
       device_return_mediator = DeviceReturnMediator.new(device: device)
       expect(device_return_mediator.valid?).to be_falsey
-      expect(device_return_mediator.errors[:status]).to include('is not checked out')
+      expect(device_return_mediator.errors[:device]).to include('is not checked out')
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.describe DeviceReturnMediator, type: :mediator do
       end
 
       it 'contains errors regarding device' do
-        expect(subject.tap(&:save).errors['status']).to include('is not checked out')
+        expect(subject.tap(&:save).errors['device']).to eql(['is not checked out'])
       end
     end
   end

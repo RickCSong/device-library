@@ -62,7 +62,7 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: ['must be an admin to perform this']}}.to_json)
+        expect(response.body).to eql({errors: {user: ['must be an admin to perform this']}}.to_json)
       end
     end
 
@@ -112,7 +112,7 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: ['must be an admin to perform this']}}.to_json)
+        expect(response.body).to eql({errors: {user: ['must be an admin to perform this']}}.to_json)
       end
     end
 
@@ -161,7 +161,7 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :create, device: valid_attributes
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: ['must be an admin to perform this']}}.to_json)
+        expect(response.body).to eql({errors: {user: ['must be an admin to perform this']}}.to_json)
       end
     end
 
@@ -190,7 +190,7 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :checkout
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: ['must be a terminal to perform this']}}.to_json)
+        expect(response.body).to eql({errors: {user: ['must be a terminal to perform this']}}.to_json)
       end
     end
 
@@ -238,7 +238,7 @@ RSpec.describe DevicesController, type: :controller do
         it 'returns with device errors' do
           xhr :post, :checkout, barcode: device.barcode, user_id: user.id
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.body).to eql({errors: {status: ['is not available']}}.to_json)
+          expect(response.body).to eql({errors: {device: ['is not available']}}.to_json)
         end
       end
     end
@@ -251,7 +251,7 @@ RSpec.describe DevicesController, type: :controller do
       it 'responds with forbidden error' do
         xhr :post, :return
         expect(response).to have_http_status(:forbidden)
-        expect(response.body).to eql({errors: {role: ['must be a terminal to perform this']}}.to_json)
+        expect(response.body).to eql({errors: {user: ['must be a terminal to perform this']}}.to_json)
       end
     end
 
@@ -297,7 +297,7 @@ RSpec.describe DevicesController, type: :controller do
         it 'returns with device errors' do
           xhr :post, :return, barcode: device.barcode
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.body).to eql({errors: {status: ['is not checked out']}}.to_json)
+          expect(response.body).to eql({errors: {device: ['is not checked out']}}.to_json)
         end
       end
     end

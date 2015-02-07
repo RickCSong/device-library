@@ -27,7 +27,7 @@ module Authentication
   def require_admin_permission
     unless current_user.admin?
       respond_to do |format|
-        format.json { render json: {errors: {role: ['must be an admin to perform this']}}.to_json, status: :forbidden }
+        format.json { render json: {errors: {user: ['must be an admin to perform this']}}.to_json, status: :forbidden }
       end
     end
   end
@@ -35,7 +35,7 @@ module Authentication
   def require_terminal_permission
     unless current_user.terminal? || current_user.admin?
       respond_to do |format|
-        format.json { render json: {errors: {role: ['must be a terminal to perform this']}}.to_json, status: :forbidden }
+        format.json { render json: {errors: {user: ['must be a terminal to perform this']}}.to_json, status: :forbidden }
       end
     end
   end

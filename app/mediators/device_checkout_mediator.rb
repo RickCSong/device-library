@@ -14,7 +14,6 @@ class DeviceCheckoutMediator
   def save
     if valid?
       device.update(status: :checked_out, user_id: user_id)
-      # TODO: Create Device Activity Log here
       true
     else
       false
@@ -24,6 +23,6 @@ class DeviceCheckoutMediator
   private
 
   def device_is_available
-    errors.add(:status, 'is not available') unless device.try!(:available?)
+    errors.add(:device, 'is not available') unless device.try!(:available?)
   end
 end

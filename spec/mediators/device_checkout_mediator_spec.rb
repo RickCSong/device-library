@@ -9,7 +9,7 @@ RSpec.describe DeviceCheckoutMediator, type: :mediator do
       user = build(:user)
       device_checkout_mediator = DeviceCheckoutMediator.new(device: device, user_id: user)
       expect(device_checkout_mediator.valid?).to be_falsey
-      expect(device_checkout_mediator.errors[:status]).to include('is not available')
+      expect(device_checkout_mediator.errors[:device]).to include('is not available')
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe DeviceCheckoutMediator, type: :mediator do
       end
 
       it 'contains errors regarding device' do
-        expect(subject.tap(&:save).errors['status']).to include('is not available')
+        expect(subject.tap(&:save).errors['device']).to eql(['is not available'])
       end
     end
   end
