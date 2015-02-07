@@ -21,7 +21,7 @@ RSpec.describe 'categories/show', type: :view do
     subject { JSON.parse(rendered)['category'] }
 
     it { is_expected.to include('id') }
-    it { expect(subject['id']).to eql(category.id) }
+    it { expect(subject['id']).to eql(category.friendly_id) }
 
     it { is_expected.to include('name') }
     it { expect(subject['name']).to eql(category.name) }

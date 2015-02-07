@@ -97,6 +97,8 @@ GEM
       json-schema (~> 1.1)
       kramdown
       thor
+    friendly_id (5.1.0)
+      activerecord (>= 4.0.0)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
     hike (1.2.3)
@@ -255,6 +257,7 @@ DEPENDENCIES
   ember-cli-rails
   factory_girl_rails
   fdoc
+  friendly_id
   go_people!
   jbuilder
   mysql2

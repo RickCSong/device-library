@@ -4,6 +4,7 @@ gem 'rails', '4.2'
 
 # MODELS
 gem 'mysql2'
+gem 'friendly_id'
 
 # AUTH
 gem 'go_people', git: 'https://stash.corp.squareup.com/scm/it/go_people_rails.git'
