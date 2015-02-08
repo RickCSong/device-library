@@ -246,6 +246,9 @@ html[dir="rtl"] {
   .select2-choice {
     border: 1px solid $select2-border-color-selected;
     outline: none;
+    .select2-arrow > b:after {
+      border-color: $select2-border-color-selected;
+    }
   }
   .select2-choices {
     border: 1px solid $select2-border-color-selected;
