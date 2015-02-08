@@ -1,19 +1,26 @@
 class DeviceCheckoutMediator
   include ActiveModel::Model
 
-  attr_accessor :device, :user_id
+  attr_accessor :device, :user
 
   validates :device,
             presence: true
 
-  validates :user_id,
+  validates :user,
             presence: true
 
   validate :device_is_available
 
   def save
-    if valid?
-      device.update(status: :checked_out, user_id: user_id)
+    old_status = device.status
+    new_status = 'checked_out'
+    if valid? and device.update(status: :checked_out, user: user)
+      Activity.create(
+        device: device,
+        user: user,
+        status_from: old_status,
+        status_to: new_status
+      )
       true
     else
       false

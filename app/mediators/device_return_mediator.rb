@@ -9,8 +9,16 @@ class DeviceReturnMediator
   validate :device_is_checked_out
 
   def save
-    if valid?
-      device.update(status: :available, user_id: nil)
+    user = device.user
+    old_status = device.status
+    new_status = 'available'
+    if valid? and device.update(status: :available, user_id: nil)
+      Activity.create(
+        device: device,
+        user: user,
+        status_from: old_status,
+        status_to: new_status
+      )
       true
     else
       false

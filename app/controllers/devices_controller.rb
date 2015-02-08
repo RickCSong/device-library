@@ -58,7 +58,8 @@ class DevicesController < ApplicationController
 
   # POST /devices/checkout
   def checkout
-    @device_checkout = DeviceCheckoutMediator.new(device: @device, user_id: params[:user_id])
+    user = User.find(params[:user_id])
+    @device_checkout = DeviceCheckoutMediator.new(device: @device, user: user)
     respond_to do |format|
       if @device_checkout.save
         format.json { head :no_content }

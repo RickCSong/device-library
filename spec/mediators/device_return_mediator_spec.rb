@@ -24,17 +24,32 @@ RSpec.describe DeviceReturnMediator, type: :mediator do
         expect { subject.save }.to change { device.user_id }.to(nil)
       end
 
+      it 'creates a new activity entry' do
+        user = device.user
+        status_from = device.status
+        expect { subject.save }.to change { Activity.count }.by(1)
+        activity = Activity.last
+        expect(activity.user).to eql(user)
+        expect(activity.device).to eql(device)
+        expect(activity.status_from).to eql(status_from)
+        expect(activity.status_to).to eql('available')
+      end
+
       it 'returns true' do
         expect(subject.save).to be_truthy
       end
     end
 
     context 'invalid' do
-      let(:device) { create :device, :available }
+      let(:device) { create :device, status: :available }
       subject { DeviceReturnMediator.new(device: device) }
 
       it 'does not update the device' do
         expect { subject.save }.to_not change { device.status }
+      end
+
+      it 'does not create a new activity entry' do
+        expect { subject.save }.to_not change { Activity.count }
       end
 
       it 'returns false' do
