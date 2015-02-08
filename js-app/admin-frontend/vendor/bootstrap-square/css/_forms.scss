@@ -1,3 +1,18 @@
+.form-actions {
+  display: flex;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: $form-actions-border;
+
+  .btn:not(.btn-danger) {
+    min-width: 90px;
+  }
+
+  .btn + .btn {
+    margin-left: 10px;
+  }
+}
+
 input {
   outline: none !important;
 }
@@ -20,7 +35,7 @@ fieldset {
   // NOTE: This is to combat webkit's bullshit default of `min-width:-webkit-min-content`
   min-width: inherit;
   border: none;
-  border-bottom: $form-fieldset-border-bottom;
+  border-bottom: $form-fieldset-border;
   &:last-of-type,
   &:last-child {
     border-bottom: none;
@@ -93,3 +108,65 @@ input[type="checkbox"]:checked::after {
   border-bottom: 2px solid $form-el-checkbox-color;
   border-left: 2px solid $form-el-checkbox-color;
 }
+
+textarea.form-control {
+  resize: vertical;
+}
+
+.form-group {
+    & + .form-group {
+      margin-top: 40px;
+    }
+
+    .form-input {
+      position: relative;
+    }
+
+    .help-block {
+      position: absolute;
+      left: 0;
+      top: 100%;
+
+      min-height: 28px;
+      width: 100%;
+      margin: 0;
+      padding: 6px 12px;
+      border-radius: 3px;
+      transform: translateY(11px);
+
+      opacity: 0;
+      visibility: hidden;
+
+      background: $color-red;
+
+      color: $color-white;
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 16px;
+
+      z-index: 3;
+
+      transition: visibility 0 linear 0.3s,opacity 0.3s ease,transform 0.3s cubic-bezier(0.175, 0.855, 0.32, 1.275);
+
+      &:before {
+        content: '';
+        position:absolute;
+        top: -2px;
+        left: 18px;
+        width: 6px;
+        height: 6px;
+        display: block;
+        transform: rotate(45deg);
+        background-color: $color-red;
+      }
+    }
+
+    &.has-error .help-block {
+      background: $color-red;
+
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(6px);
+      transition: opacity 0.3s ease,transform 0.3s cubic-bezier(0.175, 0.855, 0.32, 1.275);
+    }
+  }

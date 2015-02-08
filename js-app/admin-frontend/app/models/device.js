@@ -1,6 +1,27 @@
+import Ember from 'ember';
 import DS from 'ember-data';
+import EmberValidations from 'ember-validations';
 
-export default DS.Model.extend({
+export default DS.Model.extend(EmberValidations.Mixin, {
+  validations: {
+    category: {
+      presence: true
+    },
+    hardware: {
+      presence: true
+    },
+    operatingSystem: {
+      presence: true
+    },
+    storageCode: {
+      presence: true
+    },
+    barcode: {
+      presence: true
+    }
+  },
+  notValid: Ember.computed.not('isValid'),
+
   hardware: DS.attr('string'),
   operatingSystem: DS.attr('string'),
   storageCode: DS.attr('string'),
