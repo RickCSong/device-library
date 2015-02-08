@@ -5,12 +5,12 @@
 #  id               :integer          not null, primary key
 #  hardware         :string(255)
 #  operating_system :string(255)
-#  storage_code     :string(255)
-#  barcode          :string(255)
-#  status           :integer          default("0")
+#  storage_code     :string(255)      not null
+#  barcode          :string(255)      not null
+#  status           :integer          default("0"), not null
 #  details          :text(65535)
 #  user_id          :integer
-#  category_id      :integer
+#  category_id      :integer          not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #

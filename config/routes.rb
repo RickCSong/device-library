@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   root 'static#index'
   mount Sq::SSO::Engine => '/'
 
+  resources :activities, only: [:index, :show], constraints: FormatTest.new(:json)
   resources :users, only: [:index, :show], constraints: FormatTest.new(:json)
   resources :categories, only: [:index, :show, :create, :update, :destroy], constraints: FormatTest.new(:json)
   resources :devices, only: [:index, :show, :create, :update, :destroy], constraints: FormatTest.new(:json) do

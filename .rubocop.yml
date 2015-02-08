@@ -4,6 +4,7 @@ AllCops:
     - lib/**/*
     - vendor/**/*
     - db/**/*
+    - js-app/**/*
 
 Lint/EndAlignment:
   AlignWith: keyword

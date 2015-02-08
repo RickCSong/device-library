@@ -5,10 +5,9 @@ class DevicesController < ApplicationController
   before_action :require_terminal_permission, only: [:checkout, :return]
   before_action :set_device_by_barcode, only: [:checkout, :return]
 
-
   # GET /devices.json
   def index
-    @devices = params[:ids] ? Device.where(id: params[:ids]) : Device.all
+    @devices = params[:ids] ? Device.find(params[:ids]) : Device.all
 
     respond_to do |format|
       format.json

@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128093025) do
+ActiveRecord::Schema.define(version: 20150207215401) do
+
+  create_table "activities", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4,   null: false
+    t.integer  "device_id",   limit: 4,   null: false
+    t.string   "status_from", limit: 255, null: false
+    t.string   "status_to",   limit: 255, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "activities", ["device_id"], name: "index_activities_on_device_id", using: :btree
+  add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -53,6 +65,8 @@ ActiveRecord::Schema.define(version: 20150128093025) do
 
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  add_foreign_key "activities", "devices"
+  add_foreign_key "activities", "users"
   add_foreign_key "devices", "categories"
   add_foreign_key "devices", "users"
 end
