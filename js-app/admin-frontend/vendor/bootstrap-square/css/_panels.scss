@@ -17,6 +17,10 @@ $panel-bevel-heading-border-color: $color-ultra-light-dark;
       align-items: center;
       border-bottom: 1px solid $panel-bevel-heading-border-color;
       padding: 20px 15px;
+
+      .btn + .btn {
+        margin-left: 10px;
+      }
     }
   }
 }

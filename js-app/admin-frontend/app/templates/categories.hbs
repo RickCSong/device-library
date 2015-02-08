@@ -5,6 +5,11 @@
         {{#li-link-to href='category' model=category}} {{category.name}} {{/li-link-to}}
       {{/each}}
     </ul>
+    <div>
+      {{#link-to 'categories.new'}}
+        <i class="fa fa-plus"></i> Create new category
+      {{/link-to}}
+    </div>
   </div>
   <div class="col-md-9">
     {{outlet}}

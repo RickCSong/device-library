@@ -1,6 +1,13 @@
 <div class="panel panel-bevelled">
   <div class="panel-heading">
-    <h3> {{category.name}} </h3>
+    {{#link-to 'devices.new' class="btn btn-primary"}}
+      Create Device
+    {{/link-to}}
+
+    <button class="btn btn-success">
+      <i class="fa fa-cloud-download"></i> Export
+    </button>
+
     <div class="flex-spacer"></div>
 
     <div class="form-search">
