@@ -1,0 +1,25 @@
+<div class="panel panel-bevelled">
+  <div class="panel-heading">
+    <h3> {{fullName}} </h3>
+    <div class="flex-spacer"></div>
+    <h5 class="text-muted"> #{{storageCode}} </h5>
+  </div>
+
+  <div class="panel-body">
+    <form>
+      <div class="form-group">
+        <label>Hardware</label>
+        {{input class="form-control" value=hardware }}
+      </div>
+      <div class="form-group">
+        <label>Operating System</label>
+        {{input class="form-control" value=operatingSystem}}
+      </div>
+
+      <div class="form-group">
+        <label>Storage Code</label>
+        {{input class="form-control" value=storageCode}}
+      </div>
+    </form>
+  </div>
+</div>

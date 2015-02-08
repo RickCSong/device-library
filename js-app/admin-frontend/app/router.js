@@ -6,10 +6,17 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.resource("inventory", { path: '/inventory' }, function() {
+  this.resource("categories", { path: '/categories' }, function() {
+    this.route('new');
+
     this.resource("category", { path: '/:category_id' }, function() {
-      this.resource("device", { path: '/:device_id' }, function() {
-        this.route('edit');
+      this.route('edit');
+
+      this.resource("devices", { path: '/devices' }, function() {
+        this.route('new');
+        this.resource("device", { path: '/:device_id' }, function() {
+          this.route('edit');
+        });
       });
     });
   });
