@@ -31,7 +31,7 @@ export default DS.Model.extend({
   status: DS.attr('string'),
 
   user: DS.belongsTo('user', {async: true}),
-  category: DS.belongsTo('category', {async: true}),
+  category: DS.belongsTo('category'),
   activities: DS.hasMany('activity', {async: true}),
 
   fullName: function() {

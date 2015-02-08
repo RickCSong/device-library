@@ -1,7 +1,16 @@
 import Ember from 'ember';
-import DataRouteMixin from 'ember-data-route/mixins/data-route';
+import BufferedProxy from 'ember-buffered-proxy/proxy';
+import BufferedChangeRoute from 'admin-frontend/mixins/buffered-change-route';
 
-export default Ember.Route.extend(DataRouteMixin, {
+export default Ember.Route.extend(BufferedChangeRoute, {
+  setupController: function(controller, model) {
+    var buffer = BufferedProxy.create({
+      content: model
+    });
+    console.log(buffer.get('hasChanges'));
+    controller.set('model', buffer);
+  },
+
   willTransitionConfirm: function() {
     return window.confirm("You have unsaved changes that will be lost. Do you want to continue?");
   },
