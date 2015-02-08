@@ -1,0 +1,95 @@
+input {
+  outline: none !important;
+}
+
+legend {
+  margin-bottom: 0px;
+  border-bottom: none;
+  padding-bottom: $form-legend-padding-bottom;
+
+  color: $form-legend-font-color;
+  font-weight: $form-legend-font-weight;
+  font-size: $form-legend-font-size;
+  letter-spacing: $form-legend-letter-spacing;
+  text-transform: uppercase;
+}
+
+fieldset {
+  padding: 0 0 30px 0;
+  margin: 0 0 30px 0;
+  // NOTE: This is to combat webkit's bullshit default of `min-width:-webkit-min-content`
+  min-width: inherit;
+  border: none;
+  border-bottom: $form-fieldset-border-bottom;
+  &:last-of-type,
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.form-control {
+  // height: $input-height;
+  border: $form-el-border-size solid $form-el-border-color;
+  font-size: $form-el-font-size;
+  border-radius: $form-el-border-radius;
+  transition: none;
+  box-shadow: none !important;
+}
+
+.form-control:focus {
+  border-color: $form-el-border-color-focus;
+}
+
+.form-search {
+  position: relative;
+
+  input {
+    padding-left: 35px;
+    &:focus ~ i {
+      color: $form-el-border-color-focus;
+    }
+  }
+
+  i {
+    position: absolute;
+    left: 14px;
+    top: 11px;
+    color: $form-el-border-color;
+  }
+}
+
+input[type="search"] {
+  border-radius: $form-el-search-border-radius;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  border-radius: $form-el-border-radius;
+
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  border: $form-el-border-size solid $form-el-border-color;
+  display: inline-block;
+  line-height: 1em;
+  margin-top: 3px;
+  margin-right: 7px;
+  padding: 0;
+  width: 14px !important;
+  height: 14px !important;
+  vertical-align: text-top;
+  background: #fff;
+}
+
+input[type="checkbox"]:checked::after {
+  transform: rotate(-45deg);
+
+  position: absolute;
+  content: '';
+  left: 15%;
+  top: 0%;
+  height: 40%;
+  width: 100%;
+  border-bottom: 2px solid $form-el-checkbox-color;
+  border-left: 2px solid $form-el-checkbox-color;
+}

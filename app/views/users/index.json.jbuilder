@@ -4,4 +4,5 @@ json.users @users do |user|
   json.firstName user.first_name
   json.lastName user.last_name
   json.devices user.device_ids
+  json.activities user.activity_ids
 end

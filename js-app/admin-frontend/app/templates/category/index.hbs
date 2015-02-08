@@ -1,0 +1,35 @@
+<div class="panel panel-bevelled">
+  <div class="panel-heading">
+    <h3> {{category.name}} </h3>
+    <div class="flex-spacer"></div>
+
+    <div class="form-search">
+      {{input type="search" class='form-control' value=search}}
+      <i class="fa fa-search"></i>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <table class="table table-default">
+      <thead>
+        <tr>
+          <th>Storage Code</th>
+          <th>Device</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#each device in filteredContent}}
+        <tr>
+          <td>#{{device.storageCode}}</td>
+          <td>{{device.fullName}}</td>
+          <td>{{device.status}}</td>
+          <td>{{#link-to 'device.edit' device}} Edit {{/link-to}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

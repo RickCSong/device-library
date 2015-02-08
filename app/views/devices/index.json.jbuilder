@@ -8,4 +8,5 @@ json.devices @devices do |device|
   json.status device.status
   json.user device.user_id
   json.category device.category_id
+  json.activities device.activity_ids
 end

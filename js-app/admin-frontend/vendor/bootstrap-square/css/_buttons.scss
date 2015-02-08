@@ -1,0 +1,91 @@
+@mixin button-variant($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open &.dropdown-toggle {
+    color: $color;
+    background-color: darken($background, 8%);
+        border-color: darken($border, 12%);
+  }
+  &:active,
+  &.active,
+  .open &.dropdown-toggle {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: $background;
+          border-color: $border
+    }
+  }
+}
+
+%Button {
+  border-width: $button-border-size;
+  border-style: solid;
+  margin-bottom: 0; // For input.btn
+  border-radius: $button-border-radius;
+  letter-spacing: 0.05em;
+  text-align: center;
+  transition: $button-transition-list;
+  cursor: pointer;
+  outline: none !important;
+}
+
+%ButtonIsHovered {
+  transition-duration: $button-transition-duration-out;
+}
+
+.btn {
+  @extend %Button;
+  &:hover {
+    @extend %ButtonIsHovered;
+  }
+}
+
+.btn-default {
+  @include button-variant($button-default-font-color, $button-default-background-color, $button-default-border-color);
+  // &:hover { background-color: $color-white; }
+}
+
+.btn-primary {
+  @include button-variant($button-primary-font-color, $button-primary-background-color, $button-primary-border-color);
+  // &:hover { background-color: $color-blue-light; }
+}
+
+.btn-success {
+  @include button-variant($button-success-font-color, $button-success-background-color, $button-success-border-color);
+  // border-color:     transparent;
+  // background-color: $color-green;
+  // color:            $color-white;
+  // &:hover { background-color: $color-green-light; }
+}
+
+.btn-info {
+  @include button-variant($button-info-font-color, $button-info-background-color, $button-info-border-color);
+  // border-color:     lighten($color-base-dark, 8%);
+  // background-color: $color-medium;
+  // color:            $color-white;
+  // &:hover { border-color: lighten($color-base-dark, 8%); }
+}
+
+.btn-warning {
+  @include button-variant($button-warning-font-color, $button-warning-background-color, $button-warning-border-color);
+  // &:hover { border-color: lighten($btn-warning-background-color, 8%); }
+}
+
+.btn-danger {
+  @include button-variant($button-danger-font-color, $button-danger-background-color, $button-danger-border-color);
+  // &:hover { background-color: $color-red-light; }
+}

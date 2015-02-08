@@ -27,7 +27,7 @@ RSpec.describe 'categories/index', type: :view do
     subject { JSON.parse(rendered)['categories'][0] }
 
     it { is_expected.to include('id') }
-    it { expect(subject['id']).to eql(category.friendly_id) }
+    it { expect(subject['id']).to eql(category.id) }
 
     it { is_expected.to include('name') }
     it { expect(subject['name']).to eql(category.name) }

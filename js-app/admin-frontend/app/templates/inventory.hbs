@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-3">
+    <ul class="nav nav-pills nav-stacked">
+      {{#each category in controller}}
+        {{#li-link-to href='category' model=category}} {{category.name}} {{/li-link-to}}
+      {{/each}}
+    </ul>
+  </div>
+  <div class="col-md-9">
+    {{outlet}}
+  </div>
+</div>

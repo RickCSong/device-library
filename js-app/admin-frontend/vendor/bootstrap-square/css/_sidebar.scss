@@ -1,0 +1,29 @@
+$sidebar-font-weight:                     $font-weight-medium;
+$sidebar-color:                           gray;
+$sidebar-item-border-radius:              0;
+$sidebar-item-min-height:                 34px;
+$sidebar-item-hover-color:                $color-base;
+$sidebar-item-is-active-border:           1px solid $color-blue-medium;
+$sidebar-item-is-active-background-color: $color-blue-medium;
+
+ul.nav.nav-pills, ul.nav.nav-sidebar {
+  margin-bottom: 10px;
+
+  li {
+    &.active > a {
+      cursor: default;
+      background-color: $sidebar-item-is-active-background-color;
+      color: $color-white;
+    }
+
+    &:hover:not(.active) > a {
+      cursor: pointer;
+      color: $sidebar-item-hover-color;
+      background-color: $color-white;
+    }
+
+    a {
+      color: $sidebar-color;
+    }
+  }
+}

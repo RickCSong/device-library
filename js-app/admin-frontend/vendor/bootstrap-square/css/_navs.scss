@@ -1,0 +1,24 @@
+$nav-pill-height: 34px;
+$nav-pill-padding-top-bottom: 9px;
+$nav-pill-padding-left-right: 15px;
+$nav-pill-border-radius: 3px;
+
+$nav-pill-font-color: $color-medium-dark;
+$nav-pill-active-font-color: $color-white;
+$nav-pill-active-background-color: $color-blue-medium;
+
+ul.nav {
+  &.nav-pills {
+    li > a {
+      padding: $nav-pill-padding-top-bottom $nav-pill-padding-left-right;
+      line-height: $nav-pill-height - ($nav-pill-padding-top-bottom * 2);
+      border-radius: $nav-pill-border-radius;
+
+      color: $nav-pill-font-color;
+    }
+    li.active > a {
+      background-color: $nav-pill-active-background-color;
+      color: $nav-pill-active-font-color;
+    }
+  }
+}
