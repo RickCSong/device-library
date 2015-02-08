@@ -13,3 +13,9 @@ body {
   right: 0;
   padding-top: $navbar-primary-height + 40px;
 }
+
+.alert {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

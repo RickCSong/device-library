@@ -7,7 +7,6 @@ export default Ember.Route.extend(BufferedChangeRoute, {
     var buffer = BufferedProxy.create({
       content: model
     });
-    console.log(buffer.get('hasChanges'));
     controller.set('model', buffer);
   },
 
