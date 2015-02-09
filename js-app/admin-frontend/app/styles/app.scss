@@ -19,3 +19,17 @@ body {
   bottom: 0;
   width: 100%;
 }
+
+.form-group.has-error .help-block {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(11px);
+  transition: visibility 0 linear 0.3s,opacity 0.3s ease,transform 0.3s cubic-bezier(0.175, 0.855, 0.32, 1.275);
+
+  &.display-help-block {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease,transform 0.3s cubic-bezier(0.175, 0.855, 0.32, 1.275);
+  }
+}
