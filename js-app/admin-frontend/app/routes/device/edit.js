@@ -51,6 +51,7 @@ export default Ember.Route.extend(BufferedChangeRoute, {
         // Error
         () => {
           this.send('flash', 'danger', `Error has occurred.  Unable to delete ${device.get('fullName')}.`);
+          device.rollback();
         }
       );
     }

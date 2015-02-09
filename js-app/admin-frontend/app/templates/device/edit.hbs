@@ -38,12 +38,12 @@
     </div>
 
     <div class="form-actions">
-      <button class="btn btn-primary" {{action 'save'}} {{bind-attr disabled=disableSave}}> Save </button>
+      {{#spinner-button class="btn-primary" loading=device.isSaving disable=disableSave}} Save {{/spinner-button}}
       <button class="btn btn-default" {{action 'cancel'}}> Cancel </button>
       <div class="flex-spacer"></div>
-      <button class="btn btn-danger" {{action 'destroy'}}>
+      {{#spinner-button class="btn-danger" action='destroy' loading=device.isSaving}}
         <i class="fa fa-trash"></i>
-      </button>
+      {{/spinner-button}}
     </div>
     {{/em-form}}
   </div>
