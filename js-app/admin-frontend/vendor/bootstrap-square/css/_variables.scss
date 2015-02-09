@@ -147,6 +147,9 @@ $form-el-search-border-radius: $form-el-height;
 
 $form-el-checkbox-color: $color-base;
 
+$form-el-border-color-success: $color-green;
+$form-el-border-color-warning: $color-gold;
+$form-el-border-color-error: $color-red;
 
 // Navbar
 // ------------------------------------
@@ -231,6 +234,9 @@ $select2-background-color-error: $color-red-lightest;
 $select2-border-color: $color-light;
 $select2-border-color-selected: $color-blue-medium;
 
+$select2-border-color-success: $form-el-border-color-success;
+$select2-border-color-warning: $form-el-border-color-warning;
+$select2-border-color-error: $form-el-border-color-error;
 
 // Tables
 // ------------------------------------

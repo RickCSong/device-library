@@ -6,10 +6,23 @@ export default Ember.Mixin.create({
     return true;
   },
 
+  resetController: function() {
+    var buffer = this.get('controller.model');
+    var model = buffer.get('content');
+    if(!model.get('isDeleted')) {
+      if (model.get('isNew')) {
+        model.deleteRecord();
+      } else {
+        model.rollback();
+      }
+    }
+  },
+
   actions: {
     willTransition: function(transition) {
-      var model = this.get('controller.model');
-      if (model.get('hasChanges') && !this.willTransitionConfirm(transition)) {
+      var buffer = this.get('controller.model');
+      var model = buffer.get('content');
+      if (buffer.get('hasChanges') && model.get('isDirty') && !this.willTransitionConfirm(transition)) {
         transition.abort();
       }
     }

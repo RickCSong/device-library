@@ -1,11 +1,31 @@
-// TODO: Remove these.
-$white: #fff;
-$black: #000;
-$color_half_and_half_approx: #feffde;
-$color_alto_approx: #ddd;
-$color_mine_shaft_approx: #333;
-$color_mercury_approx: #e4e4e4;
-$color_quill_gray_approx: #d4d4d4;
+@mixin has-state($color) {
+  .select2-container .select2-choice {
+    border-color: $color !important;
+
+    .select2-arrow b:after {
+      border-color: $color;
+    }
+  }
+
+  &.select2-drop {
+    border-left-color: $color;
+    border-bottom-color: $color;
+    border-right-color: $color;
+  }
+}
+
+
+.has-success {
+  @include has-state($select2-border-color-success);
+}
+
+.has-warning {
+  @include has-state($select2-border-color-warning);
+}
+
+.has-error {
+  @include has-state($select2-border-color-error);
+}
 
 .select2-container {
   font-size: $select2-font-size;
@@ -106,7 +126,7 @@ $color_quill_gray_approx: #d4d4d4;
   }
   &.select2-container-disabled .select2-choice {
     background-color: $select2-background-color-disabled;
-    border: 1px solid $color_alto_approx;
+    border: 1px solid #dddddd;
     cursor: default;
     .select2-arrow {
       background-color: $select2-background-color-disabled;
@@ -124,7 +144,7 @@ $color_quill_gray_approx: #d4d4d4;
   position: absolute;
   z-index: 9999;
   top: 100%;
-  background: $white;
+  background: #ffffff;
   font-size: $select2-font-size-dropdown;
   color: $select2-font-color-dropdown;
   border: 1px solid $select2-border-color;
@@ -301,7 +321,7 @@ html[dir="rtl"] {
     list-style: none;
     display: list-item;
     em {
-      background: $color_half_and_half_approx;
+      background: #feffde;
       font-style: normal;
     }
     &.select2-result-with-children > .select2-result-label {
@@ -322,7 +342,7 @@ html[dir="rtl"] {
       background: transparent;
     }
     ul {
-      background: $white;
+      background: #ffffff;
       color: $select2-font-color-dropdown;
     }
   }
@@ -399,19 +419,19 @@ html[dir="rtl"] {
       margin: 3px 0 3px 5px;
       position: relative;
       line-height: 13px;
-      color: $color_mine_shaft_approx;
+      color: #333333;
       cursor: default;
       border: 1px solid $select2-border-color;
       border-radius: 3px;
       background-clip: padding-box;
       user-select: none;
-      background-color: $color_mercury_approx;
+      background-color: #e4e4e4;
       .select2-chosen {
         cursor: default;
       }
     }
     .select2-search-choice-focus {
-      background: $color_quill_gray_approx;
+      background: #d4d4d4;
     }
   }
   &.select2-container-active .select2-choices {
@@ -420,11 +440,11 @@ html[dir="rtl"] {
   }
   &.select2-container-disabled .select2-choices {
     background-color: $select2-background-color-disabled;
-    border: 1px solid $color_alto_approx;
+    border: 1px solid #dddddd;
     cursor: default;
     .select2-search-choice {
       padding: 3px 5px;
-      border: 1px solid $color_alto_approx;
+      border: 1px solid #dddddd;
       background-color: $select2-background-color-disabled;
       .select2-search-choice-close {
         display: none;

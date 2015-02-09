@@ -1,3 +1,18 @@
+@mixin has-state($color) {
+  .control-label {
+    color: $color;
+  }
+
+  .form-control {
+    border-color: $color;
+  }
+
+  .form-control-feedback {
+    color: $color;
+  }
+}
+
+
 .form-actions {
   display: flex;
   margin-top: 20px;
@@ -114,59 +129,73 @@ textarea.form-control {
 }
 
 .form-group {
-    & + .form-group {
-      margin-top: 40px;
-    }
+  position: relative;
 
-    .form-input {
-      position: relative;
-    }
+  & + .form-group {
+    margin-top: 40px;
+  }
 
-    .help-block {
-      position: absolute;
-      left: 0;
-      top: 100%;
+  &.has-success {
+    @include has-state($form-el-border-color-success);
+  }
 
-      min-height: 28px;
-      width: 100%;
-      margin: 0;
-      padding: 6px 12px;
-      border-radius: 3px;
-      transform: translateY(11px);
+  &.has-warning {
+    @include has-state($form-el-border-color-warning);
+  }
 
-      opacity: 0;
-      visibility: hidden;
+  &.has-error {
+    @include has-state($form-el-border-color-error);
+  }
 
-      background: $color-red;
+  .form-input {
+    position: relative;
+  }
 
-      color: $color-white;
-      font-size: 11px;
-      font-weight: 500;
-      line-height: 16px;
+  .help-block {
+    position: absolute;
+    left: 0;
+    top: 100%;
 
-      z-index: 3;
+    min-height: 28px;
+    width: 100%;
+    margin: 0;
+    padding: 6px 12px;
+    border-radius: 3px;
+    transform: translateY(11px);
 
-      transition: visibility 0 linear 0.3s,opacity 0.3s ease,transform 0.3s cubic-bezier(0.175, 0.855, 0.32, 1.275);
+    opacity: 0;
+    visibility: hidden;
 
-      &:before {
-        content: '';
-        position:absolute;
-        top: -2px;
-        left: 18px;
-        width: 6px;
-        height: 6px;
-        display: block;
-        transform: rotate(45deg);
-        background-color: $color-red;
-      }
-    }
+    background: $color-red;
 
-    &.has-error .help-block {
-      background: $color-red;
+    color: $color-white;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
 
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(6px);
-      transition: opacity 0.3s ease,transform 0.3s cubic-bezier(0.175, 0.855, 0.32, 1.275);
+    z-index: 3;
+
+    transition: visibility 0 linear 0.3s,opacity 0.3s ease,transform 0.3s cubic-bezier(0.175, 0.855, 0.32, 1.275);
+
+    &:before {
+      content: '';
+      position:absolute;
+      top: -2px;
+      left: 18px;
+      width: 6px;
+      height: 6px;
+      display: block;
+      transform: rotate(45deg);
+      background-color: $color-red;
     }
   }
+
+  &.has-error .help-block {
+    background: $color-red;
+
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease,transform 0.3s cubic-bezier(0.175, 0.855, 0.32, 1.275);
+  }
+}

@@ -1,0 +1,45 @@
+<div class="panel panel-bevelled">
+  <div class="panel-heading">
+    <h3> Create a New Device </h3>
+    <div class="flex-spacer"></div>
+  </div>
+
+  <div class="panel-body">
+    {{#em-form model=model submit_button=false}}
+    <div class="row">
+      <div class="col-md-12">
+        {{em-select-2 label="Category" property="category" content=categoryOptions optionLabelPath="label" optionValuePath="value" prompt="Select a category"}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        {{em-input property="hardware" label="Hardware"}}
+      </div>
+      <div class="col-md-6">
+        {{em-input property="operatingSystem" label="Operating System"}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        {{em-input property="storageCode" label="Storage Code"}}
+      </div>
+      <div class="col-md-6">
+        {{em-input property="barcode" label="Barcode"}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        {{em-text property="details" label="Details"}}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary" {{action 'save'}} {{bind-attr disabled=disableSave}}> Save </button>
+      <button class="btn btn-default" {{action 'cancel'}}> Cancel </button>
+    </div>
+    {{/em-form}}
+  </div>
+</div>

@@ -3,12 +3,11 @@ import DeviceForm from 'admin-frontend/models/device-form';
 import BufferedChangeRoute from 'admin-frontend/mixins/buffered-change-route';
 
 export default Ember.Route.extend(BufferedChangeRoute, {
-  setupController: function(controller, model) {
-    controller.set('model',
-      DeviceForm.create({
-        content: model
-      })
-    );
+  model: function() {
+    var device = this.modelFor('device');
+    return DeviceForm.create({
+      content: device
+    });
   },
 
   willTransitionConfirm: function() {
