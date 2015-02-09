@@ -1,12 +1,12 @@
 <div class="panel panel-bevelled">
   <div class="panel-heading">
-    <h3> {{fullName}} </h3>
+    <h3> {{device.fullName}} </h3>
     <div class="flex-spacer"></div>
-    <h5 class="text-muted"> #{{content.content.storageCode}} </h5>
+    <h5 class="text-muted"> #{{device.storageCode}} </h5>
   </div>
 
   <div class="panel-body">
-    {{#em-form model=content submit_button=false}}
+    {{#em-form model=model submit_button=false}}
     <div class="row">
       <div class="col-md-12">
         {{em-select-2 label="Category" property="category" content=categoryOptions optionLabelPath="label" optionValuePath="value" prompt="Select a category"}}
@@ -38,7 +38,7 @@
     </div>
 
     <div class="form-actions">
-      <button class="btn btn-primary" {{action 'save'}} {{bind-attr disabled=notValid}}> Save </button>
+      <button class="btn btn-primary" {{action 'save'}} {{bind-attr disabled=disableSave}}> Save </button>
       <button class="btn btn-default" {{action 'cancel'}}> Cancel </button>
       <div class="flex-spacer"></div>
       <button class="btn btn-danger" {{action 'destroy'}}>

@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   classNameBindings: ['isSuccess:alert-success', 'isInfo:alert-info', 'isDanger:alert-danger'],
   queuedMessages: Ember.required(),
 
-  hideAfterMs: 2000,
+  hideAfterMs: 3000,
   currentType: null,
   currentMessage: null,
 

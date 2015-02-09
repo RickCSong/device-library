@@ -1,13 +1,14 @@
 import Ember from 'ember';
-import BufferedProxy from 'ember-buffered-proxy/proxy';
+import DeviceForm from 'admin-frontend/models/device-form';
 import BufferedChangeRoute from 'admin-frontend/mixins/buffered-change-route';
 
 export default Ember.Route.extend(BufferedChangeRoute, {
   setupController: function(controller, model) {
-    var buffer = BufferedProxy.create({
-      content: model
-    });
-    controller.set('model', buffer);
+    controller.set('model',
+      DeviceForm.create({
+        content: model
+      })
+    );
   },
 
   willTransitionConfirm: function() {
@@ -16,19 +17,43 @@ export default Ember.Route.extend(BufferedChangeRoute, {
 
   actions: {
     save: function() {
-      var device = this.get('controller.model');
-      console.log(device);
-      this.send('flash', 'success', 'YAYYYYYYY!');
+      var buffer = this.get('controller.model');
+      var device = this.get('controller.model.content');
+      buffer.applyChanges();
+
+      device.save().then(
+        // Success
+        () => {
+          this.send('flash', 'success', 'Device has been successfully updated.');
+        },
+        // Error
+        () => {
+          this.send('flash', 'danger', `Error has occurred.  Unable to update ${device.get('fullName')}.`);
+          // TODO: Note that there is a bug currently where belongsTo relations are NOT rolled-back by
+          // rollback().  Thus, the user will get in an out-of-sync state when he changes the category
+          // loses connection, and then attempts a save.  It will rollback all changes except for category.
+          // This bug should be a P5 because it should rarely happen.  Just interesting.
+          device.rollback();
+        }
+      );
     },
     cancel: function() {
-      var device = this.get('controller.model');
-      device.rollback();
+      var buffer = this.get('controller.model');
+      buffer.discardChanges();
       this.transitionTo('devices');
     },
     destroy: function() {
-      var device = this.get('controller.model');
-      console.log(device);
-      this.send('flash', 'danger', 'DANGERRRRR!');
+      var device = this.get('controller.model.content');
+      device.destroyRecord().then(
+        // Success
+        () => {
+          this.send('flash', 'success', 'Device has been destroyed.');
+        },
+        // Error
+        () => {
+          this.send('flash', 'danger', `Error has occurred.  Unable to delete ${device.get('fullName')}.`);
+        }
+      );
     }
   }
 });
